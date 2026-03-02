@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Spec Writer",
+    "description": "Accelerates PRD and spec creation using context from stakeholder conversations and research.",
+    "type": "product",
+    "status": "active"
+  },
+  {
+    "name": "Research Synthesizer",
+    "description": "Synthesizes user research, market data, and competitive analysis into actionable insights.",
+    "type": "research",
+    "status": "active"
+  },
+  {
+    "name": "Data Analyst",
+    "description": "Queries Metabase dashboards and SQL datasets to surface metrics and experimentation results.",
+    "type": "analytics",
+    "status": "active"
+  },
+  {
+    "name": "Communication Agent",
+    "description": "Drafts stakeholder updates, cross-functional communications, and release notes.",
+    "type": "content",
+    "status": "active"
+  },
+  {
+    "name": "Roadmap Planner",
+    "description": "Structures quarterly roadmaps, prioritization frameworks, and phase breakdowns.",
+    "type": "planning",
+    "status": "active"
+  },
+  {
+    "name": "Code Reviewer",
+    "description": "Reviews API specs, technical documentation, and product requirements for completeness.",
+    "type": "development",
+    "status": "active"
+  }
+]

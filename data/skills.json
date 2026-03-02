@@ -1,0 +1,33 @@
+[
+  {
+    "category": "Product Management",
+    "items": [
+      "Roadmap Ownership", "PRDs", "Discovery", "A/B Testing",
+      "Experimentation", "Metrics Definition", "0→1 Builds", "Stakeholder Alignment"
+    ]
+  },
+  {
+    "category": "AI & Machine Learning",
+    "items": [
+      "Recommendations Systems", "Personalization", "Model Input Definition",
+      "Feedback Loops", "AI-Native Tooling", "Python (ML)"
+    ]
+  },
+  {
+    "category": "Data & Analytics",
+    "items": [
+      "SQL", "Metabase", "Data-Driven Decisions", "KPI Definition", "Experimentation Design"
+    ]
+  },
+  {
+    "category": "Tools & Methodologies",
+    "items": [
+      "Claude Code", "Cursor", "Perplexity", "Figma", "Jira",
+      "Agile / Scrum", "Certified PO", "Technical Writing"
+    ]
+  },
+  {
+    "category": "Languages",
+    "items": ["Spanish (Native)", "English (Fluent)"]
+  }
+]

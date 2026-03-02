@@ -1,0 +1,26 @@
+{
+  "site": {
+    "name": "Dulce Lucero Ruvalcaba Valenzuela",
+    "tagline": "AI Product Manager · 10+ Years Experience",
+    "role": "Product Manager — AI",
+    "author": "Dulce Lucero Ruvalcaba Valenzuela",
+    "email": "druvalcabavlz@gmail.com",
+    "phone": "+52 33 1537 8056",
+    "location": "Mexico City, Mexico",
+    "social": {
+      "linkedin": "https://linkedin.com/in/dulceruvalcaba",
+      "github": "https://github.com/druvalcabavlz"
+    }
+  },
+  "theme": {
+    "primaryColor": "#2563EB",
+    "accentColor": "#2563EB",
+    "backgroundColor": "#FFFFFF",
+    "textColor": "#111111",
+    "style": "pure-minimal",
+    "fonts": {
+      "heading": "Archivo",
+      "body": "DM Sans"
+    }
+  }
+}

@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dulce Lucero Ruvalcaba — AI Product Manager</title>
+  <meta name="description" content="AI Product Manager with 10+ years delivering data-heavy products across healthtech, fintech, and e-commerce." />
+  <meta name="theme-color" content="#FFFFFF" />
+
+  <!-- Fonts: Archivo (headings) + DM Sans (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy:      '#111111',
+            primary:   '#2563EB',
+            sky:       '#3B82F6',
+            cta:       '#2563EB',
+            bg:        '#F9FAFB',
+            surface:   '#FFFFFF',
+            border:    '#E5E7EB',
+            muted:     '#6B7280',
+          },
+          fontFamily: {
+            heading: ['Archivo', 'sans-serif'],
+            body:    ['DM Sans', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html  { scroll-behavior: smooth; }
+    body  { font-family: 'DM Sans', sans-serif; background: #FFFFFF; color: #111111; line-height: 1.6; }
+    h1,h2,h3,h4 { font-family: 'Archivo', sans-serif; }
+
+    /* ─── Hero grid (removed) ─── */
+    .hero-grid { background: #FFFFFF; }
+
+    /* ─── Scroll reveal ─── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
+    /* ─── Timeline ─── */
+    .tl-item { position: relative; padding-left: 2rem; }
+    .tl-item::before {
+      content: ''; position: absolute; left: 7px; top: 28px; bottom: -24px;
+      width: 2px; background: #E5E7EB;
+      transform: scaleY(0); transform-origin: top; transition: transform 0.6s ease;
+    }
+    .tl-item:last-child::before { display: none; }
+    .tl-dot {
+      position: absolute; left: 0; top: 20px;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: #2563EB; border: 3px solid #FFFFFF;
+      box-shadow: 0 0 0 2px #E5E7EB;
+    }
+
+    /* ─── Skill chips ─── */
+    .chip { transition: background 0.2s ease, color 0.2s ease; cursor: default; position: relative; overflow: hidden; }
+    .chip:hover { background: #2563EB; color: #fff; }
+
+    /* ─── Nav active ─── */
+    .nav-link { transition: color 0.2s ease; }
+    .nav-link:hover { color: #2563EB; }
+
+    /* ─── Section divider ─── */
+    .section-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: #2563EB;
+    }
+
+    /* ─── Focus rings (a11y) ─── */
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid #2563EB;
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    /* ─── Scroll margin for anchored sections ─── */
+    section[id] { scroll-margin-top: 72px; }
+
+    /* ─── Sticky nav: scrolled state ─── */
+    .nav-scrolled { background: rgba(255,255,255,0.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid #E5E7EB; }
+    .nav-scrolled nav { padding-top: 0.6rem; padding-bottom: 0.6rem; }
+
+    /* ─── Touch optimisation ─── */
+    a, button { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+
+    /* ─── Skip link ─── */
+    .skip-link {
+      position: absolute; left: 1rem; top: -3rem;
+      background: #2563EB; color: #fff;
+      padding: 0.5rem 1rem; border-radius: 6px;
+      font-size: 0.875rem; font-weight: 600;
+      transition: top 0.2s ease; z-index: 9999;
+    }
+    .skip-link:focus { top: 1rem; }
+
+    /* ─── Reduced motion: disable pulse ─── */
+    @media (prefers-reduced-motion: reduce) {
+      .animate-pulse { animation: none; }
+    }
+
+    /* ─── Metric counter ─── */
+    .metric-num { font-family: 'Archivo', sans-serif; font-weight: 900; }
+
+    /* ─── Card hover ─── */
+    .exp-card { transition: box-shadow 0.25s ease, border-color 0.25s ease; }
+    .exp-card:hover { box-shadow: 0 8px 32px rgba(37,99,235,0.08); border-color: #2563EB; }
+
+    /* ─── Hero photo frame accent ─── */
+    .photo-frame {
+      position: relative;
+      display: inline-block;
+      isolation: isolate;
+    }
+    .photo-frame::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #2563EB;
+      border-radius: 1rem;
+      transform: translate(12px, 12px);
+      z-index: -1;
+      transition: transform 0.3s ease;
+    }
+    .photo-frame:hover::before {
+      transform: translate(6px, 6px);
+    }
+    .photo-frame img {
+      clip-path: polygon(0 0, 92% 0, 100% 8%, 100% 100%, 0 100%);
+      display: block;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─── Diagonal section dividers ─── */
+    .diagonal-bottom {
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 40px), 0 100%);
+      padding-bottom: calc(5rem + 40px) !important;
+    }
+
+    /* ─── Skill chip ripple ─── */
+    .chip::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 100%; height: 100%;
+      transform: translate(-50%, -50%) scale(0);
+      background: rgba(37, 99, 235, 0.3);
+      border-radius: inherit;
+      pointer-events: none;
+      transition: transform 0.5s ease, opacity 0.5s ease;
+      opacity: 1;
+    }
+    .chip.ripple-once::after {
+      transform: translate(-50%, -50%) scale(2.5);
+      opacity: 0;
+    }
+
+    /* ─── Timeline draw-in ─── */
+    .tl-drawn::before { transform: scaleY(1) !important; }
+  </style>
+</head>
+
+<body>
+
+<!-- Skip link for keyboard users -->
+<a href="#hero" class="skip-link">Skip to main content</a>
+
+<!-- ════════════════════════════════════════
+     NAV
+════════════════════════════════════════ -->
+<header id="site-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <nav class="max-w-5xl mx-auto px-6 md:px-12 lg:px-24 py-5 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#hero" aria-label="Go to top" class="font-heading font-bold text-navy text-sm tracking-tight">
+      Dulce Lucero
+    </a>
+
+    <!-- Links -->
+    <ul class="flex items-center gap-7 list-none">
+      <li><a href="#about"      class="nav-link text-muted text-sm">About</a></li>
+      <li><a href="#skills"     class="nav-link text-muted text-sm">Skills</a></li>
+      <li><a href="#experience" class="nav-link text-muted text-sm">Experience</a></li>
+      <li><a href="#contact"    class="nav-link text-primary text-sm font-semibold">Hire Me</a></li>
+    </ul>
+  </nav>
+</header>
+
+<a href="#contact" id="hire-cta" aria-label="Contact Dulce" class="fixed bottom-6 right-6 z-50 md:hidden bg-primary text-white text-sm font-semibold px-5 py-3 rounded-full shadow-lg cursor-pointer" style="opacity:0; pointer-events:none; transition: opacity 0.3s ease, transform 0.3s ease; transform: translateY(8px);">
+  Hire Me &rarr;
+</a>
+
+<!-- ════════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<section id="hero" class="hero-grid min-h-screen flex flex-col justify-center pt-24 pb-20 px-6 md:px-12 lg:px-24">
+  <div class="max-w-5xl mx-auto w-full flex flex-col md:flex-row md:items-center gap-10 md:gap-16">
+
+    <!-- Left: text -->
+    <div class="flex-1">
+
+    <!-- Role badge -->
+    <div class="inline-flex items-center gap-2 mb-8">
+      <span class="w-1.5 h-1.5 rounded-full bg-cta" aria-hidden="true"></span>
+      <span class="text-xs font-medium text-muted tracking-widest uppercase">Open to new opportunities</span>
+    </div>
+
+    <!-- Name -->
+    <h1 class="font-heading font-black text-navy leading-none mb-4" style="font-size: clamp(2.8rem, 8vw, 6rem);">
+      Dulce Lucero<br/>
+      <span class="text-primary">Ruvalcaba</span>
+    </h1>
+
+    <!-- Title -->
+    <p class="font-heading font-semibold text-xl md:text-2xl text-muted mb-6">
+      AI Product Manager · 10+ Years Experience
+    </p>
+
+    <!-- Summary -->
+    <p class="text-base md:text-lg text-muted max-w-2xl mb-10 leading-relaxed">
+      I build AI-driven products that move the needle — across industries, from early-stage
+      discovery to full-scale launch. I partner with data science and engineering
+      to ship what matters, fast.
+    </p>
+
+    <!-- CTAs -->
+    <div class="flex flex-wrap items-center gap-5 mt-2">
+      <a href="#contact"
+         class="text-sm font-semibold text-white bg-primary px-5 py-2.5 rounded-lg cursor-pointer hover:bg-sky transition-colors duration-200">
+        Get in touch
+      </a>
+      <a href="https://linkedin.com/in/dulceruvalcaba" target="_blank" rel="noopener noreferrer"
+         class="text-sm font-medium text-muted hover:text-primary transition-colors duration-200">
+        LinkedIn ↗
+      </a>
+      <a href="https://github.com/druvalcabavlz" target="_blank" rel="noopener noreferrer"
+         class="text-sm font-medium text-muted hover:text-primary transition-colors duration-200">
+        GitHub ↗
+      </a>
+    </div>
+
+
+    </div><!-- /left text -->
+
+    <!-- Right: profile photo -->
+    <div class="flex-shrink-0 flex justify-center md:justify-end">
+      <div class="photo-frame">
+        <img
+          src="assets/images/dulce-profile.jpg"
+          alt="Dulce Lucero Ruvalcaba — AI Product Manager"
+          width="300"
+          height="300"
+          fetchpriority="high"
+          class="w-52 h-52 md:w-64 md:h-64 object-cover object-top rounded-2xl"
+        />
+      </div>
+    </div><!-- /right photo -->
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     METRICS
+════════════════════════════════════════ -->
+<section class="bg-navy py-14 px-6 md:px-12 lg:px-24 diagonal-bottom" aria-label="Key achievements">
+  <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+
+    <div class="reveal text-center">
+      <p class="metric-num text-white" style="font-size: clamp(2.2rem, 5vw, 3.5rem);" data-target="10" data-suffix="+">0</p>
+      <p class="text-sky text-sm font-medium mt-1">Years in Product</p>
+    </div>
+
+    <div class="reveal text-center" style="transition-delay: 0.1s">
+      <p class="metric-num text-white" style="font-size: clamp(2.2rem, 5vw, 3.5rem);" data-target="10" data-prefix="+" data-suffix="%">0</p>
+      <p class="text-sky text-sm font-medium mt-1">Conversion via AI</p>
+    </div>
+
+    <div class="reveal text-center" style="transition-delay: 0.2s">
+      <p class="metric-num text-white" style="font-size: clamp(2.2rem, 5vw, 3.5rem);" data-target="27" data-prefix="+" data-suffix="%">0</p>
+      <p class="text-sky text-sm font-medium mt-1">Client Interaction</p>
+    </div>
+
+    <div class="reveal text-center" style="transition-delay: 0.3s">
+      <p class="metric-num text-white" style="font-size: clamp(2.2rem, 5vw, 3.5rem);" data-target="6">0</p>
+      <p class="text-sky text-sm font-medium mt-1">Industries Shipped</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     ABOUT
+════════════════════════════════════════ -->
+<section id="about" class="py-24 px-6 md:px-12 lg:px-24 bg-surface diagonal-bottom">
+  <div class="max-w-5xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-16 items-center">
+
+      <!-- Left: text -->
+      <div class="reveal">
+        <p class="section-label mb-4">About me</p>
+        <h2 class="font-heading font-black text-navy leading-tight mb-6" style="font-size: clamp(1.8rem, 4vw, 2.8rem);">
+          I ship AI products<br/>people actually use.
+        </h2>
+        <p class="text-muted leading-relaxed mb-4">
+          Product Manager with 10+ years delivering AI-driven and data-heavy products across
+          healthtech, fintech, and e-commerce. I led a 0→1 AI-powered recommendations engine
+          end-to-end — from discovery through launch — driving a 10% lift in conversion
+          through personalization and A/B-tested relevance improvements.
+        </p>
+        <p class="text-muted leading-relaxed mb-8">
+          I'm experienced partnering with data science and engineering to define model inputs,
+          feedback loops, and experimentation frameworks. Strong track record owning roadmaps,
+          aligning cross-functional teams, and communicating trade-offs clearly to stakeholders.
+        </p>
+
+        <div class="flex flex-wrap gap-3">
+          <span class="inline-flex items-center gap-1.5 bg-bg border border-border text-primary text-sm font-medium px-3 py-1.5 rounded-full">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+            Mexico City, MX
+          </span>
+          <span class="inline-flex items-center gap-1.5 bg-bg border border-border text-primary text-sm font-medium px-3 py-1.5 rounded-full">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253"/></svg>
+            Remote-ready
+          </span>
+          <span class="inline-flex items-center gap-1.5 bg-bg border border-border text-primary text-sm font-medium px-3 py-1.5 rounded-full">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 01-3.827-5.802"/></svg>
+            ES / EN Fluent
+          </span>
+        </div>
+      </div>
+
+      <!-- Right: highlights -->
+      <div class="reveal grid grid-cols-1 gap-4" style="transition-delay: 0.15s">
+        <div class="bg-bg border border-border rounded-xl p-5">
+          <div class="flex items-start gap-3">
+            <div class="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/></svg>
+            </div>
+            <div>
+              <h3 class="font-heading font-bold text-navy text-sm mb-1">AI-Native PM</h3>
+              <p class="text-muted text-sm">Embedded Claude Code, Cursor & Perplexity into daily PM workflow — shipping faster and smarter.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-bg border border-border rounded-xl p-5">
+          <div class="flex items-start gap-3">
+            <div class="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+            </div>
+            <div>
+              <h3 class="font-heading font-bold text-navy text-sm mb-1">Data-Driven Decision Maker</h3>
+              <p class="text-muted text-sm">SQL, Metabase, A/B testing — I define metrics before features and iterate based on evidence.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-bg border border-border rounded-xl p-5">
+          <div class="flex items-start gap-3">
+            <div class="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/></svg>
+            </div>
+            <div>
+              <h3 class="font-heading font-bold text-navy text-sm mb-1">Cross-Functional Leader</h3>
+              <p class="text-muted text-sm">Aligned engineering, design, data, legal, and compliance across 4+ industries and 3 continents.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SKILLS
+════════════════════════════════════════ -->
+<section id="skills" class="py-24 px-6 md:px-12 lg:px-24 bg-bg">
+  <div class="max-w-5xl mx-auto">
+
+    <div class="reveal mb-12">
+      <p class="section-label mb-3">Expertise</p>
+      <h2 class="font-heading font-black text-navy leading-tight" style="font-size: clamp(1.8rem, 4vw, 2.8rem);">
+        Skills &amp; Tools
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+
+      <!-- Product Management -->
+      <div class="reveal bg-surface border border-border rounded-xl p-6 exp-card">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
+            <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"/></svg>
+          </div>
+          <h3 class="font-heading font-bold text-navy">Product Management</h3>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip bg-bg border border-border text-navy text-sm px-3 py-1 rounded-full">Roadmap Ownership</span>
+          <span class="chip bg-bg border border-border text-navy text-sm px-3 py-1 rounded-full">PRDs</span>
+          <span class="chip bg-bg border border-border text-navy text-sm px-3 py-1 rounded-full">Discovery</span>
+          <span class="chip bg-bg border border-border text-navy text-sm px-3 py-1 rounded-full">A/B Testing</span>
+          <span class="chip bg-bg border border-border text-navy text-sm px-3 py-1 rounded-full">Experimentation</span>
+          <span class="chip bg-bg border border-border text-navy text-sm px-3 py-1 rounded-full">Metrics Definition</span>
+          <span class="chip bg-bg border border-border text-navy text-sm px-3 py-1 rounded-full">0→1 Builds</span>
+          <span class="chip bg-bg border border-border text-navy text-sm px-3 py-1 rounded-full">Stakeholder Alignment</span>
+        </div>
+      </div>
+
+      <!-- AI / ML -->
+      <div class="reveal bg-surface border border-border rounded-xl p-6 exp-card" style="transition-delay: 0.1s">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
+            <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423L16.5 15.75l.394 1.183a2.25 2.25 0 001.423 1.423L19.5 18.75l-1.183.394a2.25 2.25 0 00-1.423 1.423z"/></svg>
+          </div>
+          <h3 class="font-heading font-bold text-navy">AI &amp; Machine Learning</h3>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip bg-primary/10 border border-primary/20 text-primary text-sm px-3 py-1 rounded-full font-medium">Recommendations Systems</span>
+          <span class="chip bg-bg border border-border text-navy text-sm px-3 py-1 rounded-full">Personalization</span>
+          <span class="chip bg-bg border border-border text-navy text-sm px-3 py-1 rounded-full">Model Input Definition</span>
+          <span class="chip bg-bg border border-border text-navy text-sm px-3 py-1 rounded-full">Feedback Loops</span>
+          <span class="chip bg-bg border border-border text-navy text-sm px-3 py-1 rounded-full">AI-Native Tooling</span>
+          <span class="chip bg-bg border border-border text-navy text-sm px-3 py-1 rounded-full">Python (ML)</span>
+        </div>
+      </div>
+
+      <!-- Data & Analytics -->
+      <div class="reveal bg-surface border border-border rounded-xl p-6 exp-card" style="transition-delay: 0.15s">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
+            <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+          </div>
+          <h3 class="font-heading font-bold text-navy">Data &amp; Analytics</h3>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip bg-bg border border-border text-navy text-sm px-3 py-1 rounded-full">SQL</span>
+          <span class="chip bg-bg border border-border text-navy text-sm px-3 py-1 rounded-full">Metabase</span>
+          <span class="chip bg-bg border border-border text-navy text-sm px-3 py-1 rounded-full">Data-Driven Decisions</span>
+          <span class="chip bg-bg border border-border text-navy text-sm px-3 py-1 rounded-full">KPI Definition</span>
+          <span class="chip bg-bg border border-border text-navy text-sm px-3 py-1 rounded-full">Experimentation Design</span>
+        </div>
+      </div>
+
+      <!-- Tools & Methods -->
+      <div class="reveal bg-surface border border-border rounded-xl p-6 exp-card" style="transition-delay: 0.2s">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
+            <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"/></svg>
+          </div>
+          <h3 class="font-heading font-bold text-navy">Tools &amp; Methodologies</h3>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip bg-bg border border-border text-navy text-sm px-3 py-1 rounded-full">Claude Code</span>
+          <span class="chip bg-bg border border-border text-navy text-sm px-3 py-1 rounded-full">Cursor</span>
+          <span class="chip bg-bg border border-border text-navy text-sm px-3 py-1 rounded-full">Perplexity</span>
+          <span class="chip bg-bg border border-border text-navy text-sm px-3 py-1 rounded-full">Figma</span>
+          <span class="chip bg-bg border border-border text-navy text-sm px-3 py-1 rounded-full">Jira</span>
+          <span class="chip bg-bg border border-border text-navy text-sm px-3 py-1 rounded-full">Agile / Scrum</span>
+          <span class="chip bg-bg border border-border text-navy text-sm px-3 py-1 rounded-full">Certified PO</span>
+          <span class="chip bg-bg border border-border text-navy text-sm px-3 py-1 rounded-full">Technical Writing</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     EXPERIENCE
+════════════════════════════════════════ -->
+<section id="experience" class="py-24 px-6 md:px-12 lg:px-24 bg-surface">
+  <div class="max-w-5xl mx-auto">
+
+    <div class="reveal mb-12">
+      <p class="section-label mb-3">Career</p>
+      <h2 class="font-heading font-black text-navy leading-tight" style="font-size: clamp(1.8rem, 4vw, 2.8rem);">
+        Experience
+      </h2>
+    </div>
+
+    <div class="space-y-6">
+
+      <!-- EPAM Systems -->
+      <div class="reveal tl-item">
+        <div class="tl-dot" aria-hidden="true"></div>
+        <div class="exp-card bg-bg border border-border rounded-xl p-6 cursor-default">
+          <div class="flex flex-wrap items-start justify-between gap-2 mb-3">
+            <div>
+              <h3 class="font-heading font-bold text-navy">Product Manager — AI Recommendations</h3>
+              <p class="text-primary font-medium text-sm">EPAM Systems · Remote</p>
+            </div>
+            <span class="bg-cta/10 text-cta text-xs font-semibold px-3 py-1 rounded-full border border-cta/20">Current</span>
+          </div>
+          <p class="text-xs text-muted mb-4 font-medium">May 2024 – Present</p>
+          <ul class="space-y-2">
+            <li class="flex items-start gap-2 text-muted text-sm">
+              <svg class="w-4 h-4 text-primary mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              Led 0→1 AI-powered recommendations engine for an e-commerce platform — full roadmap from discovery to launch
+            </li>
+            <li class="flex items-start gap-2 text-muted text-sm">
+              <svg class="w-4 h-4 text-primary mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              <strong class="text-navy">+10% conversion</strong>&nbsp;through AI-driven personalization and A/B-tested relevance improvements
+            </li>
+            <li class="flex items-start gap-2 text-muted text-sm">
+              <svg class="w-4 h-4 text-primary mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              Partnered with data science to define model inputs, feedback loops, and quality thresholds
+            </li>
+            <li class="flex items-start gap-2 text-muted text-sm">
+              <svg class="w-4 h-4 text-primary mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              Embedded AI-native tools (Claude Code, Cursor, Perplexity) into product workflow
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Stori -->
+      <div class="reveal tl-item" style="transition-delay: 0.08s">
+        <div class="tl-dot" aria-hidden="true"></div>
+        <div class="exp-card bg-bg border border-border rounded-xl p-6 cursor-default">
+          <div class="flex flex-wrap items-start justify-between gap-2 mb-3">
+            <div>
+              <h3 class="font-heading font-bold text-navy">Lead Product Manager</h3>
+              <p class="text-primary font-medium text-sm">Stori · Mexico City · Fintech</p>
+            </div>
+            <span class="bg-bg border border-border text-muted text-xs font-medium px-3 py-1 rounded-full">Fintech</span>
+          </div>
+          <p class="text-xs text-muted mb-4 font-medium">Nov 2023 – Apr 2024</p>
+          <ul class="space-y-2">
+            <li class="flex items-start gap-2 text-muted text-sm">
+              <svg class="w-4 h-4 text-primary mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              0→1 white label API platform for Mastercard credit card issuance
+            </li>
+            <li class="flex items-start gap-2 text-muted text-sm">
+              <svg class="w-4 h-4 text-primary mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              Defined API product strategy, endpoint design, authentication flows, and card controls
+            </li>
+            <li class="flex items-start gap-2 text-muted text-sm">
+              <svg class="w-4 h-4 text-primary mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              Aligned engineering, compliance, legal, and risk with Mastercard network standards
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Clivi Health -->
+      <div class="reveal tl-item" style="transition-delay: 0.12s">
+        <div class="tl-dot" aria-hidden="true"></div>
+        <div class="exp-card bg-bg border border-border rounded-xl p-6 cursor-default">
+          <div class="flex flex-wrap items-start justify-between gap-2 mb-3">
+            <div>
+              <h3 class="font-heading font-bold text-navy">Lead Product Manager</h3>
+              <p class="text-primary font-medium text-sm">Clivi Health · Mexico City · Healthtech</p>
+            </div>
+            <span class="bg-bg border border-border text-muted text-xs font-medium px-3 py-1 rounded-full">Healthtech</span>
+          </div>
+          <p class="text-xs text-muted mb-4 font-medium">Jul 2023 – Oct 2023</p>
+          <ul class="space-y-2">
+            <li class="flex items-start gap-2 text-muted text-sm">
+              <svg class="w-4 h-4 text-primary mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              <strong class="text-navy">+20% user satisfaction</strong>&nbsp;through data-backed product enhancements from user research
+            </li>
+            <li class="flex items-start gap-2 text-muted text-sm">
+              <svg class="w-4 h-4 text-primary mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              <strong class="text-navy">+25% usage rate</strong>&nbsp;by improving core patient/doctor tool and reducing error rates
+            </li>
+            <li class="flex items-start gap-2 text-muted text-sm">
+              <svg class="w-4 h-4 text-primary mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              Reduced project delivery time by 15% through enhanced cross-functional collaboration
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Paystand -->
+      <div class="reveal tl-item" style="transition-delay: 0.16s">
+        <div class="tl-dot" aria-hidden="true"></div>
+        <div class="exp-card bg-bg border border-border rounded-xl p-6 cursor-default">
+          <div class="flex flex-wrap items-start justify-between gap-2 mb-3">
+            <div>
+              <h3 class="font-heading font-bold text-navy">Senior Product Manager</h3>
+              <p class="text-primary font-medium text-sm">Paystand · Scotts Valley, CA · Fintech</p>
+            </div>
+          </div>
+          <p class="text-xs text-muted mb-4 font-medium">Jul 2022 – Feb 2023</p>
+          <ul class="space-y-2">
+            <li class="flex items-start gap-2 text-muted text-sm">
+              <svg class="w-4 h-4 text-primary mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              Owned Account Receivable product — responsible for <strong class="text-navy">80% of company revenue</strong>
+            </li>
+            <li class="flex items-start gap-2 text-muted text-sm">
+              <svg class="w-4 h-4 text-primary mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              Planned 2 quarters of roadmap; improved Metabase metrics for data-driven decisions
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Digital on Us -->
+      <div class="reveal tl-item" style="transition-delay: 0.2s">
+        <div class="tl-dot" aria-hidden="true"></div>
+        <div class="exp-card bg-bg border border-border rounded-xl p-6 cursor-default">
+          <div class="flex flex-wrap items-start justify-between gap-2 mb-3">
+            <div>
+              <h3 class="font-heading font-bold text-navy">Delivery Manager</h3>
+              <p class="text-primary font-medium text-sm">Digital on Us · San Jose, CA · E-commerce</p>
+            </div>
+          </div>
+          <p class="text-xs text-muted mb-4 font-medium">Aug 2021 – Apr 2022</p>
+          <ul class="space-y-2">
+            <li class="flex items-start gap-2 text-muted text-sm">
+              <svg class="w-4 h-4 text-primary mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              <strong class="text-navy">+27% client interaction</strong>&nbsp;delivering merchandising tech products for a major retailer
+            </li>
+            <li class="flex items-start gap-2 text-muted text-sm">
+              <svg class="w-4 h-4 text-primary mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              Led a team of 6 engineers and 2 PMs; built culture of customer empathy and iterative delivery
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Wizeline -->
+      <div class="reveal tl-item" style="transition-delay: 0.24s">
+        <div class="tl-dot" aria-hidden="true"></div>
+        <div class="exp-card bg-bg border border-border rounded-xl p-6 cursor-default">
+          <div class="flex flex-wrap items-start justify-between gap-2 mb-3">
+            <div>
+              <h3 class="font-heading font-bold text-navy">Tech Delivery Manager</h3>
+              <p class="text-primary font-medium text-sm">Wizeline · Zapopan, Jalisco · Global Tech</p>
+            </div>
+          </div>
+          <p class="text-xs text-muted mb-4 font-medium">Dec 2018 – Jul 2021</p>
+          <ul class="space-y-2">
+            <li class="flex items-start gap-2 text-muted text-sm">
+              <svg class="w-4 h-4 text-primary mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              Launched 5 international projects across Asia, South America, and Canada
+            </li>
+            <li class="flex items-start gap-2 text-muted text-sm">
+              <svg class="w-4 h-4 text-primary mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              Grew active SOW portfolio by 28 contracts; increased engineering hiring by 25%
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div><!-- /timeline -->
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     EDUCATION / CERTS
+════════════════════════════════════════ -->
+<section class="py-16 px-6 md:px-12 lg:px-24 bg-bg">
+  <div class="max-w-5xl mx-auto">
+    <div class="reveal mb-10">
+      <p class="section-label mb-3">Education</p>
+      <h2 class="font-heading font-black text-navy" style="font-size: clamp(1.5rem, 3vw, 2.2rem);">
+        Certifications &amp; Training
+      </h2>
+    </div>
+    <div class="grid sm:grid-cols-3 gap-4">
+      <div class="reveal bg-surface border border-border rounded-xl p-5">
+        <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center mb-3">
+          <svg class="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/></svg>
+        </div>
+        <p class="font-heading font-bold text-navy text-sm">Scrum Product Owner</p>
+        <p class="text-muted text-xs mt-1">Scrum Alliance · Dec 2020</p>
+      </div>
+      <div class="reveal bg-surface border border-border rounded-xl p-5" style="transition-delay: 0.08s">
+        <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center mb-3">
+          <svg class="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/></svg>
+        </div>
+        <p class="font-heading font-bold text-navy text-sm">Technical Writing</p>
+        <p class="text-muted text-xs mt-1">Wizeline Academy · 2020</p>
+      </div>
+      <div class="reveal bg-surface border border-border rounded-xl p-5" style="transition-delay: 0.16s">
+        <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center mb-3">
+          <svg class="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"/></svg>
+        </div>
+        <p class="font-heading font-bold text-navy text-sm">Python — ML Oriented</p>
+        <p class="text-muted text-xs mt-1">DevF · 2017</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     CONTACT
+════════════════════════════════════════ -->
+<section id="contact" class="py-24 px-6 md:px-12 lg:px-24 bg-white border-t border-border">
+  <div class="max-w-5xl mx-auto">
+    <div class="reveal text-center mb-12">
+      <p class="section-label mb-4">Let's talk</p>
+      <h2 class="font-heading font-black text-navy leading-tight mb-4" style="font-size: clamp(1.8rem, 4vw, 2.8rem);">
+        Available for new opportunities
+      </h2>
+      <p class="text-muted max-w-xl mx-auto leading-relaxed">
+        I'm actively looking for AI PM roles where I can build meaningful products
+        with great teams. Let's connect.
+      </p>
+    </div>
+
+    <div class="reveal grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto" style="transition-delay: 0.1s">
+      <a href="mailto:druvalcabavlz@gmail.com"
+         class="flex items-center gap-4 bg-bg hover:bg-white border border-border hover:border-primary rounded-xl p-5 cursor-pointer transition-all duration-200 hover:shadow-sm">
+        <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/>
+          </svg>
+        </div>
+        <div>
+          <p class="text-navy font-semibold text-sm">Email</p>
+          <p class="text-muted text-sm">druvalcabavlz@gmail.com</p>
+        </div>
+      </a>
+
+      <a href="https://linkedin.com/in/dulceruvalcaba" target="_blank" rel="noopener noreferrer"
+         class="flex items-center gap-4 bg-bg hover:bg-white border border-border hover:border-primary rounded-xl p-5 cursor-pointer transition-all duration-200 hover:shadow-sm">
+        <div class="w-10 h-10 rounded-lg bg-sky flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
+        </div>
+        <div>
+          <p class="text-navy font-semibold text-sm">LinkedIn</p>
+          <p class="text-muted text-sm">linkedin.com/in/dulceruvalcaba</p>
+        </div>
+      </a>
+
+      <a href="https://github.com/druvalcabavlz" target="_blank" rel="noopener noreferrer"
+         class="flex items-center gap-4 bg-bg hover:bg-white border border-border hover:border-primary rounded-xl p-5 cursor-pointer transition-all duration-200 hover:shadow-sm">
+        <div class="w-10 h-10 rounded-lg bg-navy flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+          </svg>
+        </div>
+        <div>
+          <p class="text-navy font-semibold text-sm">GitHub</p>
+          <p class="text-muted text-sm">github.com/druvalcabavlz</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer class="bg-navy border-t border-white/10 py-6 px-6 text-center">
+  <p class="text-muted text-sm">
+    &copy; <span id="year"></span> Dulce Lucero Ruvalcaba Valenzuela &middot; Mexico City, MX
+  </p>
+</footer>
+
+
+<script>
+  // ─── Year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ─── Scroll reveal (IntersectionObserver)
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ─── Active nav link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.style.color = link.getAttribute('href') === '#' + entry.target.id
+            ? '#2563EB' : '';
+        });
+      }
+    });
+  }, { threshold: 0.5 });
+
+  sections.forEach(s => navObserver.observe(s));
+
+  // ─── Sticky nav: scroll-aware shrink + blur (Change 1)
+  const siteHeader = document.getElementById('site-header');
+  const hireCta = document.getElementById('hire-cta');
+
+  // ─── Hide hire-cta when contact section is in view
+  const contactSection = document.getElementById('contact');
+  const contactObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        hireCta.style.opacity = '0';
+        hireCta.style.pointerEvents = 'none';
+        hireCta.style.transform = 'translateY(8px)';
+      }
+    });
+  }, { threshold: 0.2 });
+  if (contactSection) contactObserver.observe(contactSection);
+
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+
+    // Sticky nav shrink
+    if (scrollY > 60) {
+      siteHeader.classList.add('nav-scrolled');
+    } else {
+      siteHeader.classList.remove('nav-scrolled');
+    }
+
+    // Floating mobile CTA (Change 7)
+    if (!contactSection || !contactSection.getBoundingClientRect) return;
+    const contactRect = contactSection.getBoundingClientRect();
+    const contactInView = contactRect.top < window.innerHeight && contactRect.bottom > 0;
+    if (scrollY > 400 && !contactInView) {
+      hireCta.style.opacity = '1';
+      hireCta.style.pointerEvents = 'auto';
+      hireCta.style.transform = 'translateY(0)';
+    } else {
+      hireCta.style.opacity = '0';
+      hireCta.style.pointerEvents = 'none';
+      hireCta.style.transform = 'translateY(8px)';
+    }
+  }, { passive: true });
+
+  // ─── Count-up metrics (Change 2)
+  const metricsSection = document.querySelector('[aria-label="Key achievements"]');
+  if (metricsSection) {
+    let metricsDone = false;
+    const metricsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !metricsDone) {
+          metricsDone = true;
+          document.querySelectorAll('.metric-num').forEach(el => {
+            const target = parseInt(el.dataset.target, 10);
+            const prefix = el.dataset.prefix || '';
+            const suffix = el.dataset.suffix || '';
+            const duration = 1200;
+            const startTime = performance.now();
+            function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+            function tick(now) {
+              const elapsed = now - startTime;
+              const progress = Math.min(elapsed / duration, 1);
+              const value = Math.round(easeOutCubic(progress) * target);
+              el.textContent = prefix + value + suffix;
+              if (progress < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+          });
+          metricsObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    metricsObserver.observe(metricsSection);
+  }
+
+  // ─── Timeline line draws itself (Change 5)
+  const tlItems = document.querySelectorAll('.tl-item');
+  if (tlItems.length) {
+    const tlObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const siblings = Array.from(el.parentElement.querySelectorAll('.tl-item'));
+          const idx = siblings.indexOf(el);
+          setTimeout(() => {
+            el.classList.add('tl-drawn');
+          }, idx * 120);
+          tlObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.2 });
+    tlItems.forEach(item => tlObserver.observe(item));
+  }
+
+  // ─── Skill chip ripple pulse (Change 6)
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('mouseenter', () => {
+      if (chip.dataset.pulsed !== 'true') {
+        chip.classList.add('ripple-once');
+        chip.dataset.pulsed = 'true';
+        setTimeout(() => {
+          chip.classList.remove('ripple-once');
+        }, 500);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
