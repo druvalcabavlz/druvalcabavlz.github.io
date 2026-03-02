@@ -7,6 +7,15 @@
   <meta name="description" content="AI Product Manager with 10+ years delivering data-heavy products across healthtech, fintech, and e-commerce." />
   <meta name="theme-color" content="#FFFFFF" />
 
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4PQR9N1WTT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4PQR9N1WTT');
+  </script>
+
   <!-- Fonts: Archivo (headings) + DM Sans (body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1000,6 +1009,46 @@
       }
     });
   });
+
+  // ─── Custom GA4 event tracking
+  function track(event, params) {
+    if (typeof gtag !== 'undefined') gtag('event', event, params);
+  }
+
+  // Hero CTAs
+  document.querySelector('a[href="#contact"]')
+    ?.addEventListener('click', () => track('cta_click', { label: 'hero_get_in_touch' }));
+
+  document.querySelector('a[href="https://linkedin.com/in/dulceruvalcaba"]')
+    ?.addEventListener('click', () => track('social_click', { platform: 'linkedin', location: 'hero' }));
+
+  document.querySelector('a[href="https://github.com/druvalcabavlz"]')
+    ?.addEventListener('click', () => track('social_click', { platform: 'github', location: 'hero' }));
+
+  // Contact section cards
+  document.querySelector('a[href="mailto:druvalcabavlz@gmail.com"]')
+    ?.addEventListener('click', () => track('contact_click', { method: 'email' }));
+
+  document.querySelectorAll('a[href="https://linkedin.com/in/dulceruvalcaba"]').forEach((el, i) => {
+    if (i > 0) el.addEventListener('click', () => track('social_click', { platform: 'linkedin', location: 'contact' }));
+  });
+
+  document.querySelectorAll('a[href="https://github.com/druvalcabavlz"]').forEach((el, i) => {
+    if (i > 0) el.addEventListener('click', () => track('social_click', { platform: 'github', location: 'contact' }));
+  });
+
+  // Writing section — challenge card
+  document.querySelector('a[href="pages/30-days-ai-challenge.html"]')
+    ?.addEventListener('click', () => track('content_click', { type: 'challenge', label: '30_days_ai' }));
+
+  // Writing section — blog posts
+  document.querySelectorAll('a[href="pages/blog.html"]').forEach(el => {
+    el.addEventListener('click', () => track('content_click', { type: 'blog', label: el.querySelector('h3')?.textContent?.trim().slice(0, 50) || 'blog' }));
+  });
+
+  // Mobile floating CTA
+  document.getElementById('hire-cta')
+    ?.addEventListener('click', () => track('cta_click', { label: 'mobile_hire_me' }));
 </script>
 
 </body>
