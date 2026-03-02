@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Writing | Dulce Lucero — AI Product Manager</title>
+  <meta name="description" content="Thoughts on AI product management, career lessons, and the tools that help me ship faster." />
+
+  <!-- Security -->
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4PQR9N1WTT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4PQR9N1WTT');
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy:    '#111111',
+            primary: '#2563EB',
+            sky:     '#3B82F6',
+            bg:      '#F9FAFB',
+            surface: '#FFFFFF',
+            border:  '#E5E7EB',
+            muted:   '#6B7280',
+          },
+          fontFamily: {
+            heading: ['Archivo', 'sans-serif'],
+            body:    ['DM Sans', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html  { scroll-behavior: smooth; }
+    body  { font-family: 'DM Sans', sans-serif; background: #FFFFFF; color: #111111; line-height: 1.6; }
+    h1,h2,h3,h4 { font-family: 'Archivo', sans-serif; }
+
+    .section-label {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: #2563EB;
+    }
+
+    /* Nav */
+    .nav-scrolled { background: rgba(255,255,255,0.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid #E5E7EB; }
+    .nav-link { transition: color 0.2s ease; }
+    .nav-link:hover { color: #2563EB; }
+    a:focus-visible, button:focus-visible { outline: 2px solid #2563EB; outline-offset: 3px; border-radius: 4px; }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
+    /* ── Article card ── */
+    .article-card { transition: box-shadow 0.25s ease; }
+    .article-card:hover { box-shadow: 0 8px 40px rgba(0,0,0,0.10); }
+
+    /* ── Animated arrow button ── */
+    .arrow-btn { position: relative; display: inline-flex; align-items: center; overflow: hidden; }
+    .arrow-box {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #E5E7EB;
+      padding: 10px;
+      margin-right: 10px;
+      transition: background 0.3s ease, color 0.3s ease;
+      flex-shrink: 0;
+    }
+    .arrow-btn:hover .arrow-box { background: #111111; color: #fff; border-color: #111111; }
+
+    .arrow-main {
+      display: block;
+      transition: transform 0.45s ease, opacity 0.45s ease;
+    }
+    .arrow-btn:hover .arrow-main { transform: translateX(200%); opacity: 0; }
+
+    .arrow-enter {
+      position: absolute;
+      top: 50%; left: -200%;
+      transform: translateY(-50%);
+      transition: left 0.45s ease;
+    }
+    .arrow-btn:hover .arrow-enter { left: 50%; transform: translate(-50%, -50%); }
+
+    /* ── Category badge ── */
+    .category-badge {
+      position: absolute;
+      top: 0; left: 0;
+      background: #fff;
+      color: #111;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      z-index: 10;
+    }
+
+    /* ── Featured card ── */
+    .featured-badge {
+      position: absolute;
+      top: 0; left: 0;
+      background: #2563EB;
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      z-index: 10;
+    }
+
+    /* Active filter */
+    .filter-btn { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
+    .filter-btn.active { background: #111111; color: #fff; border-color: #111111; }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<header id="site-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <nav class="max-w-5xl mx-auto px-6 md:px-12 lg:px-24 py-5 flex items-center justify-between">
+    <a href="../index.html" class="font-heading font-bold text-navy text-sm tracking-tight">Dulce Lucero</a>
+    <ul class="flex items-center gap-7 list-none">
+      <li><a href="../index.html#about"      class="nav-link text-muted text-sm">About</a></li>
+      <li><a href="../index.html#skills"     class="nav-link text-muted text-sm">Skills</a></li>
+      <li><a href="../index.html#experience" class="nav-link text-muted text-sm">Experience</a></li>
+      <li><a href="blog-v2.html"             class="nav-link text-primary text-sm font-semibold">Writing</a></li>
+      <li><a href="../index.html#contact"    class="nav-link text-primary text-sm font-semibold">Hire Me</a></li>
+    </ul>
+  </nav>
+</header>
+
+
+<!-- ── PAGE HEADER ── -->
+<section class="pt-36 pb-16 px-6 md:px-12 lg:px-24 border-b border-border">
+  <div class="max-w-5xl mx-auto text-center">
+    <p class="section-label mb-4">Writing</p>
+    <h1 class="font-heading font-black text-navy leading-tight mb-4" style="font-size: clamp(2rem, 5vw, 3.5rem);">
+      Thoughts on AI, product &amp; craft
+    </h1>
+    <p class="text-muted text-lg max-w-xl mx-auto leading-relaxed">
+      What I'm learning, thinking, and building across AI product management,
+      career lessons, and the tools that help me move faster.
+    </p>
+  </div>
+</section>
+
+
+<!-- ── FILTER ── -->
+<section class="py-6 px-6 md:px-12 lg:px-24 border-b border-border bg-bg sticky top-[73px] z-40">
+  <div class="max-w-5xl mx-auto flex flex-wrap gap-2" id="filters">
+    <button class="filter-btn active text-xs font-semibold px-4 py-1.5 rounded-full border border-border bg-white" data-filter="all">All</button>
+    <button class="filter-btn text-xs font-semibold px-4 py-1.5 rounded-full border border-border bg-white text-muted" data-filter="ai-product">AI &amp; Product</button>
+    <button class="filter-btn text-xs font-semibold px-4 py-1.5 rounded-full border border-border bg-white text-muted" data-filter="career">Career</button>
+    <button class="filter-btn text-xs font-semibold px-4 py-1.5 rounded-full border border-border bg-white text-muted" data-filter="tools">Tools &amp; Workflow</button>
+    <button class="filter-btn text-xs font-semibold px-4 py-1.5 rounded-full border border-border bg-white text-muted" data-filter="challenge">Challenge</button>
+  </div>
+</section>
+
+
+<!-- ── ARTICLES GRID ── -->
+<main class="py-16 px-6 md:px-12 lg:px-24">
+  <div class="max-w-5xl mx-auto">
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" id="post-grid">
+
+      <!-- Card 1: 30-Day Challenge (featured) -->
+      <a href="30-days-ai-challenge.html"
+         class="reveal article-card group border border-border/60 bg-white/60 backdrop-blur-sm flex flex-col"
+         data-category="challenge">
+        <!-- Image -->
+        <div class="relative overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&h=640&fit=crop&crop=center"
+            alt="30 Days AI Challenge"
+            class="w-full h-64 sm:h-72 object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <span class="featured-badge">🔥 Live Challenge</span>
+        </div>
+        <!-- Content -->
+        <div class="p-4 flex flex-col flex-1">
+          <h3 class="font-heading font-bold text-navy text-lg leading-snug mb-2">
+            30 Days AI Challenge
+          </h3>
+          <p class="text-muted text-xs leading-relaxed mb-5 flex-1">
+            Every day this month I'm doing one new thing with AI and documenting it here. Art, tools, builds, automations. Day 1 is live.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="arrow-btn text-navy text-xs font-semibold">
+              <span class="arrow-box">
+                <svg class="arrow-main w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <svg class="arrow-enter w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </span>
+              Read more
+            </span>
+            <span class="flex items-center gap-2 text-[10px] text-muted">
+              Mar 2026
+              <span class="w-8 border-t border-border"></span>
+            </span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 2: AI & Product -->
+      <a href="blog.html"
+         class="reveal article-card group border border-border/60 bg-white/60 backdrop-blur-sm flex flex-col"
+         data-category="ai-product"
+         style="transition-delay: 0.07s">
+        <div class="relative overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&h=640&fit=crop&crop=center"
+            alt="Why Every PM Should Learn to Prompt Engineer"
+            class="w-full h-64 sm:h-72 object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <span class="category-badge">#AI &amp; Product</span>
+        </div>
+        <div class="p-4 flex flex-col flex-1">
+          <h3 class="font-heading font-bold text-navy text-lg leading-snug mb-2">
+            Why Every PM Should Learn to Prompt Engineer
+          </h3>
+          <p class="text-muted text-xs leading-relaxed mb-5 flex-1">
+            Prompting isn't a technical skill — it's a thinking skill. Here's why it's becoming the most important tool in a PM's kit.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="arrow-btn text-navy text-xs font-semibold">
+              <span class="arrow-box">
+                <svg class="arrow-main w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <svg class="arrow-enter w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </span>
+              Read more
+            </span>
+            <span class="flex items-center gap-2 text-[10px] text-muted">
+              Mar 2026
+              <span class="w-8 border-t border-border"></span>
+            </span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 3: Career -->
+      <a href="blog.html"
+         class="reveal article-card group border border-border/60 bg-white/60 backdrop-blur-sm flex flex-col"
+         data-category="career"
+         style="transition-delay: 0.14s">
+        <div class="relative overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=640&fit=crop&crop=center"
+            alt="10 Years in Product"
+            class="w-full h-64 sm:h-72 object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <span class="category-badge">#Career</span>
+        </div>
+        <div class="p-4 flex flex-col flex-1">
+          <h3 class="font-heading font-bold text-navy text-lg leading-snug mb-2">
+            10 Years in Product: What Actually Moves the Needle
+          </h3>
+          <p class="text-muted text-xs leading-relaxed mb-5 flex-1">
+            Frameworks are overrated. Taste, speed, and knowing when to say no are underrated. Honest lessons from a decade of shipping.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="arrow-btn text-navy text-xs font-semibold">
+              <span class="arrow-box">
+                <svg class="arrow-main w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <svg class="arrow-enter w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </span>
+              Read more
+            </span>
+            <span class="flex items-center gap-2 text-[10px] text-muted">
+              Jan 2026
+              <span class="w-8 border-t border-border"></span>
+            </span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 4: Tools -->
+      <a href="blog.html"
+         class="reveal article-card group border border-border/60 bg-white/60 backdrop-blur-sm flex flex-col"
+         data-category="tools"
+         style="transition-delay: 0.21s">
+        <div class="relative overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=640&fit=crop&crop=center"
+            alt="My PM Workflow with Claude Code and Cursor"
+            class="w-full h-64 sm:h-72 object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <span class="category-badge">#Tools &amp; Workflow</span>
+        </div>
+        <div class="p-4 flex flex-col flex-1">
+          <h3 class="font-heading font-bold text-navy text-lg leading-snug mb-2">
+            My PM Workflow with Claude Code and Cursor
+          </h3>
+          <p class="text-muted text-xs leading-relaxed mb-5 flex-1">
+            I'm not an engineer — but I ship code. Here's the exact setup I use to prototype features and move 3× faster than before.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="arrow-btn text-navy text-xs font-semibold">
+              <span class="arrow-box">
+                <svg class="arrow-main w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <svg class="arrow-enter w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </span>
+              Read more
+            </span>
+            <span class="flex items-center gap-2 text-[10px] text-muted">
+              Dec 2025
+              <span class="w-8 border-t border-border"></span>
+            </span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- Empty state -->
+    <div id="empty-state" class="hidden text-center py-20">
+      <p class="text-muted text-sm">No posts in this category yet.</p>
+    </div>
+
+  </div>
+</main>
+
+
+<!-- ── FOOTER ── -->
+<footer class="bg-navy border-t border-white/10 py-6 px-6 text-center">
+  <p class="text-muted text-sm">
+    &copy; <span id="year"></span> Dulce Lucero Ruvalcaba Valenzuela &middot;
+    <a href="../index.html" class="hover:text-white transition-colors duration-200">← Back to portfolio</a>
+  </p>
+</footer>
+
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Sticky nav
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('nav-scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Category filter
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('#post-grid a');
+  const emptyState = document.getElementById('empty-state');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      let visible = 0;
+      cards.forEach(card => {
+        const show = filter === 'all' || card.dataset.category === filter;
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      emptyState.classList.toggle('hidden', visible > 0);
+    });
+  });
+</script>
+
+</body>
+</html>
