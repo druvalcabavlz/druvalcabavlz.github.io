@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dulce Lucero Ruvalcaba — AI Product Manager</title>
+  <meta name="description" content="AI Product Manager with 10+ years delivering AI-driven products across healthtech, fintech, and e-commerce." />
+
+  <!-- Security -->
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4PQR9N1WTT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4PQR9N1WTT');
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            heading: ['Archivo', 'sans-serif'],
+            body:    ['DM Sans', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html  { scroll-behavior: smooth; }
+    body  { font-family: 'DM Sans', sans-serif; background: #09090b; color: #fff; line-height: 1.6; overflow-x: hidden; }
+    h1,h2,h3,h4 { font-family: 'Archivo', sans-serif; }
+
+    /* ── Animations ── */
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @keyframes ping {
+      75%, 100% { transform: scale(2); opacity: 0; }
+    }
+
+    .fade-in { animation: fadeSlideIn 0.8s ease-out forwards; opacity: 0; }
+    .d1 { animation-delay: 0.1s; }
+    .d2 { animation-delay: 0.2s; }
+    .d3 { animation-delay: 0.3s; }
+    .d4 { animation-delay: 0.4s; }
+    .d5 { animation-delay: 0.5s; }
+
+    .marquee-track { animation: marquee 35s linear infinite; }
+
+    /* ── Glass card ── */
+    .glass {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 1.5rem;
+    }
+
+    /* ── Nav ── */
+    .nav-scrolled {
+      background: rgba(9,9,11,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .nav-link { color: #a1a1aa; transition: color 0.2s ease; }
+    .nav-link:hover { color: #fff; }
+
+    /* ── Progress bar ── */
+    .bar-fill {
+      height: 100%;
+      border-radius: 9999px;
+      background: linear-gradient(to right, #fff, #93C5FD);
+      transition: width 1.2s ease;
+      width: 0;
+    }
+
+    /* ── Gradient heading ── */
+    .grad-text {
+      background: linear-gradient(135deg, #fff 0%, #fff 60%, #93C5FD 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Ping dot ── */
+    .ping-ring {
+      animation: ping 1.4s cubic-bezier(0,0,0.2,1) infinite;
+    }
+
+    /* ── CTA hover ── */
+    .btn-primary { transition: transform 0.2s ease, background 0.2s ease; }
+    .btn-primary:hover { transform: scale(1.02); background: #e4e4e7; }
+    .btn-primary:active { transform: scale(0.98); }
+
+    .btn-ghost { transition: background 0.2s ease, border-color 0.2s ease; }
+    .btn-ghost:hover { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.2); }
+
+    /* ── Marquee fade edges ── */
+    .marquee-fade {
+      -webkit-mask-image: linear-gradient(to right, transparent, black 18%, black 82%, transparent);
+      mask-image: linear-gradient(to right, transparent, black 18%, black 82%, transparent);
+    }
+
+    /* ── BG image mask ── */
+    .bg-hero-img {
+      position: absolute; inset: 0; z-index: 0;
+      background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?w=1920&q=70');
+      background-size: cover; background-position: center;
+      opacity: 0.18;
+      -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 20%, black 75%, transparent 100%);
+      mask-image: linear-gradient(180deg, transparent 0%, black 20%, black 75%, transparent 100%);
+    }
+
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid #3B82F6;
+      outline-offset: 3px;
+      border-radius: 6px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .fade-in { animation: none; opacity: 1; }
+      .marquee-track { animation: none; }
+      .ping-ring { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<header id="site-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <nav class="max-w-6xl mx-auto px-6 md:px-12 py-5 flex items-center justify-between">
+    <a href="index-dark.html" class="font-heading font-bold text-white text-sm tracking-tight">Dulce Lucero</a>
+    <ul class="hidden md:flex items-center gap-7 list-none">
+      <li><a href="#about"      class="nav-link text-sm">About</a></li>
+      <li><a href="#skills"     class="nav-link text-sm">Skills</a></li>
+      <li><a href="#experience" class="nav-link text-sm">Experience</a></li>
+      <li><a href="pages/blog.html" class="nav-link text-sm">Writing</a></li>
+      <li>
+        <a href="#contact"
+           class="text-sm font-semibold text-[#09090b] bg-white px-4 py-2 rounded-full hover:bg-zinc-200 transition-colors duration-200">
+          Hire Me
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+
+<!-- ── HERO ── -->
+<section id="hero" class="relative w-full min-h-screen flex items-center overflow-hidden pt-24 pb-20 px-6 md:px-12 lg:px-24">
+
+  <!-- Background -->
+  <div class="bg-hero-img"></div>
+  <!-- Radial glow -->
+  <div class="absolute top-1/3 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+  <div class="absolute bottom-1/4 right-1/4 w-72 h-72 bg-white/5 rounded-full blur-3xl pointer-events-none"></div>
+
+  <div class="relative z-10 max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
+
+    <!-- LEFT ── Text -->
+    <div class="lg:col-span-7 flex flex-col space-y-8 pt-4">
+
+      <!-- Badge -->
+      <div class="fade-in d1">
+        <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 backdrop-blur-md hover:bg-white/10 transition-colors duration-200">
+          <span class="relative flex h-2 w-2">
+            <span class="ping-ring absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+          </span>
+          <span class="text-[11px] font-semibold uppercase tracking-widest text-zinc-300">
+            Open to new opportunities
+          </span>
+        </div>
+      </div>
+
+      <!-- Name -->
+      <h1 class="fade-in d2 font-heading font-black leading-[0.92] tracking-tighter"
+          style="font-size: clamp(3rem, 9vw, 6.5rem);">
+        Dulce Lucero<br/>
+        <span class="grad-text">Ruvalcaba</span>
+      </h1>
+
+      <!-- Title -->
+      <p class="fade-in d3 font-heading font-semibold text-zinc-400 text-xl md:text-2xl -mt-2">
+        AI Product Manager · 10+ Years Experience
+      </p>
+
+      <!-- Summary -->
+      <p class="fade-in d3 text-zinc-400 text-base md:text-lg leading-relaxed max-w-xl">
+        I build AI-driven products that move the needle — across industries, from
+        early-stage discovery to full-scale launch. I partner with data science and
+        engineering to ship what matters, fast.
+      </p>
+
+      <!-- CTAs -->
+      <div class="fade-in d4 flex flex-col sm:flex-row gap-4">
+        <a href="#contact"
+           class="btn-primary inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-sm font-semibold text-zinc-950">
+          Get in touch
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <a href="https://linkedin.com/in/dulceruvalcaba" target="_blank" rel="noopener noreferrer"
+           class="btn-ghost inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-8 py-4 text-sm font-semibold text-white backdrop-blur-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn ↗
+        </a>
+      </div>
+    </div>
+
+    <!-- RIGHT ── Cards -->
+    <div class="lg:col-span-5 space-y-5 lg:mt-10">
+
+      <!-- Stats Glass Card -->
+      <div class="fade-in d5 glass p-7 relative overflow-hidden">
+        <!-- Glow -->
+        <div class="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-blue-500/10 blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10">
+          <!-- Top stat -->
+          <div class="flex items-center gap-4 mb-7">
+            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 ring-1 ring-white/20 flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            </div>
+            <div>
+              <div class="text-3xl font-heading font-black text-white tracking-tight">10+</div>
+              <div class="text-sm text-zinc-400">Years in Product</div>
+            </div>
+          </div>
+
+          <!-- Progress bar -->
+          <div class="space-y-2 mb-7">
+            <div class="flex justify-between text-sm">
+              <span class="text-zinc-400">AI-Native Expertise</span>
+              <span class="text-white font-semibold">95%</span>
+            </div>
+            <div class="h-1.5 w-full rounded-full bg-zinc-800/80 overflow-hidden">
+              <div class="bar-fill" id="bar1" style="width:0%"></div>
+            </div>
+            <div class="flex justify-between text-sm mt-3">
+              <span class="text-zinc-400">Conversion via AI</span>
+              <span class="text-white font-semibold">+10%</span>
+            </div>
+            <div class="h-1.5 w-full rounded-full bg-zinc-800/80 overflow-hidden">
+              <div class="bar-fill" id="bar2" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div class="h-px w-full bg-white/10 mb-6"></div>
+
+          <!-- Mini stats -->
+          <div class="grid grid-cols-3 gap-2 text-center">
+            <div class="flex flex-col items-center hover:-translate-y-0.5 transition-transform cursor-default">
+              <span class="text-xl font-heading font-black text-white">+27%</span>
+              <span class="text-[10px] uppercase tracking-wider text-zinc-500 font-medium">Client Growth</span>
+            </div>
+            <div class="w-px bg-white/10 mx-auto h-full"></div>
+            <div class="flex flex-col items-center hover:-translate-y-0.5 transition-transform cursor-default">
+              <span class="text-xl font-heading font-black text-white">6</span>
+              <span class="text-[10px] uppercase tracking-wider text-zinc-500 font-medium">Industries</span>
+            </div>
+            <div class="w-px bg-white/10 mx-auto h-full"></div>
+            <div class="flex flex-col items-center hover:-translate-y-0.5 transition-transform cursor-default">
+              <span class="text-xl font-heading font-black text-white">0→1</span>
+              <span class="text-[10px] uppercase tracking-wider text-zinc-500 font-medium">Builds</span>
+            </div>
+          </div>
+
+          <!-- Pills -->
+          <div class="mt-7 flex flex-wrap gap-2">
+            <div class="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-semibold tracking-widest text-zinc-300 uppercase">
+              <span class="relative flex h-2 w-2">
+                <span class="ping-ring absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+              </span>
+              Available
+            </div>
+            <div class="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-semibold tracking-widest text-zinc-300 uppercase">
+              <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              AI-Native PM
+            </div>
+            <div class="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-semibold tracking-widest text-zinc-300 uppercase">
+              Remote-ready
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Marquee Card: Companies -->
+      <div class="fade-in d5 glass py-7 overflow-hidden">
+        <p class="px-7 mb-5 text-xs font-semibold text-zinc-500 uppercase tracking-widest">Companies I've shipped for</p>
+        <div class="marquee-fade overflow-hidden">
+          <div class="marquee-track flex gap-10 whitespace-nowrap px-4">
+            <!-- First set -->
+            <span class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-default">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/></svg>
+              <span class="text-base font-bold text-white tracking-tight">EPAM</span>
+            </span>
+            <span class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-default">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>
+              <span class="text-base font-bold text-white tracking-tight">Stori</span>
+            </span>
+            <span class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-default">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+              <span class="text-base font-bold text-white tracking-tight">Clivi</span>
+            </span>
+            <span class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-default">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              <span class="text-base font-bold text-white tracking-tight">Paystand</span>
+            </span>
+            <span class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-default">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/></svg>
+              <span class="text-base font-bold text-white tracking-tight">Digital on Us</span>
+            </span>
+            <span class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-default">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              <span class="text-base font-bold text-white tracking-tight">Wizeline</span>
+            </span>
+            <!-- Duplicate for seamless loop -->
+            <span class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-default">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/></svg>
+              <span class="text-base font-bold text-white tracking-tight">EPAM</span>
+            </span>
+            <span class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-default">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>
+              <span class="text-base font-bold text-white tracking-tight">Stori</span>
+            </span>
+            <span class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-default">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+              <span class="text-base font-bold text-white tracking-tight">Clivi</span>
+            </span>
+            <span class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-default">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              <span class="text-base font-bold text-white tracking-tight">Paystand</span>
+            </span>
+            <span class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-default">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/></svg>
+              <span class="text-base font-bold text-white tracking-tight">Digital on Us</span>
+            </span>
+            <span class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-default">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              <span class="text-base font-bold text-white tracking-tight">Wizeline</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ── CONTACT ── -->
+<section id="contact" class="py-24 px-6 md:px-12 lg:px-24 border-t border-white/10">
+  <div class="max-w-6xl mx-auto text-center">
+    <p class="text-[11px] font-semibold uppercase tracking-widest text-blue-400 mb-4">Let's talk</p>
+    <h2 class="font-heading font-black text-white leading-tight mb-4" style="font-size: clamp(1.8rem, 4vw, 2.8rem);">
+      Available for new opportunities
+    </h2>
+    <p class="text-zinc-400 max-w-xl mx-auto leading-relaxed mb-12">
+      I'm actively looking for AI PM roles where I can build meaningful products
+      with great teams. Let's connect.
+    </p>
+    <div class="grid sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
+      <a href="mailto:druvalcabavlz@gmail.com"
+         class="glass flex items-center gap-3 p-5 hover:bg-white/10 transition-colors duration-200 rounded-2xl">
+        <div class="w-9 h-9 rounded-xl bg-blue-500 flex items-center justify-center flex-shrink-0">
+          <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+        </div>
+        <div class="text-left">
+          <p class="text-white font-semibold text-sm">Email</p>
+          <p class="text-zinc-500 text-xs">druvalcabavlz@gmail.com</p>
+        </div>
+      </a>
+      <a href="https://linkedin.com/in/dulceruvalcaba" target="_blank" rel="noopener noreferrer"
+         class="glass flex items-center gap-3 p-5 hover:bg-white/10 transition-colors duration-200 rounded-2xl">
+        <div class="w-9 h-9 rounded-xl bg-[#0A66C2] flex items-center justify-center flex-shrink-0">
+          <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </div>
+        <div class="text-left">
+          <p class="text-white font-semibold text-sm">LinkedIn</p>
+          <p class="text-zinc-500 text-xs">dulceruvalcaba</p>
+        </div>
+      </a>
+      <a href="https://github.com/druvalcabavlz" target="_blank" rel="noopener noreferrer"
+         class="glass flex items-center gap-3 p-5 hover:bg-white/10 transition-colors duration-200 rounded-2xl">
+        <div class="w-9 h-9 rounded-xl bg-zinc-700 flex items-center justify-center flex-shrink-0">
+          <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        </div>
+        <div class="text-left">
+          <p class="text-white font-semibold text-sm">GitHub</p>
+          <p class="text-zinc-500 text-xs">druvalcabavlz</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── FOOTER ── -->
+<footer class="border-t border-white/10 py-6 px-6 text-center">
+  <p class="text-zinc-600 text-sm">
+    &copy; <span id="year"></span> Dulce Lucero Ruvalcaba Valenzuela &middot; Mexico City, MX &middot;
+    <a href="index.html" class="hover:text-zinc-300 transition-colors duration-200">← Light version</a>
+  </p>
+</footer>
+
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Sticky nav
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('nav-scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // Animate progress bars when hero is visible
+  const bars = [
+    { el: document.getElementById('bar1'), target: 95 },
+    { el: document.getElementById('bar2'), target: 68 },
+  ];
+  let barsAnimated = false;
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !barsAnimated) {
+        barsAnimated = true;
+        setTimeout(() => {
+          bars.forEach(b => { if (b.el) b.el.style.width = b.target + '%'; });
+        }, 600);
+      }
+    });
+  }, { threshold: 0.3 });
+  const hero = document.getElementById('hero');
+  if (hero) barObserver.observe(hero);
+</script>
+
+</body>
+</html>
