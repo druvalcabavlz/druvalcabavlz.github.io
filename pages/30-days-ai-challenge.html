@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>30 Days AI Challenge | Dulce Lucero</title>
+  <meta name="description" content="30 days of doing something new with AI every day — from art to code to product thinking. A public learning log by Dulce Lucero." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy:    '#111111',
+            primary: '#2563EB',
+            sky:     '#3B82F6',
+            bg:      '#F9FAFB',
+            surface: '#FFFFFF',
+            border:  '#E5E7EB',
+            muted:   '#6B7280',
+          },
+          fontFamily: {
+            heading: ['Archivo', 'sans-serif'],
+            body:    ['DM Sans', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html  { scroll-behavior: smooth; }
+    body  { font-family: 'DM Sans', sans-serif; background: #FFFFFF; color: #111111; line-height: 1.6; }
+    h1,h2,h3,h4 { font-family: 'Archivo', sans-serif; }
+
+    .section-label {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: #2563EB;
+    }
+
+    .nav-scrolled {
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid #E5E7EB;
+    }
+    .nav-link { transition: color 0.2s ease; }
+    .nav-link:hover { color: #2563EB; }
+
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid #2563EB;
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
+    /* Progress bar */
+    .progress-bar { height: 6px; background: #E5E7EB; border-radius: 99px; overflow: hidden; }
+    .progress-fill { height: 100%; background: #2563EB; border-radius: 99px; transition: width 0.8s ease; }
+
+    /* Day entry left border */
+    .day-entry { border-left: 3px solid #E5E7EB; transition: border-color 0.2s ease; }
+    .day-entry:hover { border-color: #2563EB; }
+
+    /* Category badge colours */
+    .badge-technical  { background: #EFF6FF; color: #1D4ED8; }
+    .badge-art        { background: #FDF4FF; color: #7E22CE; }
+    .badge-skills     { background: #F0FDF4; color: #15803D; }
+    .badge-learning   { background: #FFF7ED; color: #C2410C; }
+    .badge-challenge  { background: #F0F4FF; color: #2563EB; }
+
+    /* Upcoming day placeholder */
+    .day-upcoming { opacity: 0.35; }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<header id="site-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <nav class="max-w-5xl mx-auto px-6 md:px-12 lg:px-24 py-5 flex items-center justify-between">
+    <a href="../index.html" class="font-heading font-bold text-navy text-sm tracking-tight">Dulce Lucero</a>
+    <ul class="flex items-center gap-7 list-none">
+      <li><a href="../index.html#about"      class="nav-link text-muted text-sm">About</a></li>
+      <li><a href="../index.html#experience" class="nav-link text-muted text-sm">Experience</a></li>
+      <li><a href="blog.html"                class="nav-link text-muted text-sm">Writing</a></li>
+      <li><a href="../index.html#contact"    class="nav-link text-primary text-sm font-semibold">Hire Me</a></li>
+    </ul>
+  </nav>
+</header>
+
+
+<!-- ── HERO ── -->
+<section class="pt-36 pb-16 px-6 md:px-12 lg:px-24 bg-bg border-b border-border">
+  <div class="max-w-3xl mx-auto">
+
+    <a href="blog.html" class="inline-flex items-center gap-1.5 text-sm text-muted hover:text-primary transition-colors duration-200 mb-6">
+      ← Back to Writing
+    </a>
+
+    <div class="flex items-center gap-3 mb-6">
+      <span class="text-xs font-semibold px-3 py-1 rounded-full badge-challenge">Challenge</span>
+      <span class="text-xs text-muted">Started Mar 2, 2026 · Updated daily</span>
+    </div>
+
+    <h1 class="font-heading font-black text-navy leading-tight mb-5" style="font-size: clamp(2rem, 5vw, 3.2rem);">
+      30 Days AI Challenge
+    </h1>
+
+    <p class="text-muted text-lg leading-relaxed mb-8 max-w-2xl">
+      Every day this month I'm doing one new thing with AI — and documenting it here.
+      No rules on what counts: it could be art, a tool, a workflow, a conversation, a build.
+      The only rule is that it has to be something I've never done before.
+    </p>
+
+    <!-- Progress -->
+    <div class="bg-white border border-border rounded-xl p-5 max-w-sm">
+      <div class="flex items-center justify-between mb-3">
+        <span class="text-sm font-semibold text-navy">Progress</span>
+        <span class="text-sm font-bold text-primary" id="progress-label">Day 1 of 30</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+      </div>
+      <p class="text-xs text-muted mt-3">1 day completed · 29 to go</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ── DAYS LOG ── -->
+<main class="py-16 px-6 md:px-12 lg:px-24">
+  <div class="max-w-3xl mx-auto space-y-10">
+
+    <!-- ── DAY 1 ── -->
+    <article class="day-entry reveal pl-6" id="day-1">
+      <div class="flex flex-wrap items-center gap-3 mb-3">
+        <span class="font-heading font-black text-navy text-sm">Day 01</span>
+        <span class="text-xs font-semibold px-2.5 py-1 rounded-full badge-technical">Technical</span>
+        <span class="text-xs text-muted">Mar 2, 2026</span>
+      </div>
+
+      <h2 class="font-heading font-bold text-navy text-xl mb-3">
+        I built my entire portfolio with AI — and shipped it to GitHub
+      </h2>
+
+      <div class="text-muted leading-relaxed space-y-4">
+        <p>
+          I'd been meaning to build a personal site for years. Today I stopped making excuses
+          and built the whole thing in one session using <strong class="text-navy">Claude Code</strong>
+          as my co-pilot.
+        </p>
+        <p>
+          We started with a folder structure, installed a few AI agent skills, pulled my CV,
+          and designed the whole thing from scratch — Swiss minimalism, custom colour palette,
+          Archivo + DM Sans typography, smooth scroll reveals, count-up metrics, and a timeline
+          that draws itself as you scroll.
+        </p>
+        <p>
+          Then I pushed the whole thing to GitHub for the first time using SSH keys.
+          No tutorial. No hand-holding. Just figuring it out.
+        </p>
+
+        <div class="bg-bg border border-border rounded-xl p-5 mt-4">
+          <p class="text-sm font-semibold text-navy mb-2">What I learned</p>
+          <ul class="space-y-2 text-sm">
+            <li class="flex items-start gap-2">
+              <span class="text-primary mt-0.5">→</span>
+              AI doesn't replace thinking — it amplifies it. The clearer your prompt, the better the output.
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-primary mt-0.5">→</span>
+              Setting up SSH keys for GitHub is way less scary than it sounds.
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-primary mt-0.5">→</span>
+              "Done" beats "perfect". This site will evolve — the important thing is it's live.
+            </li>
+          </ul>
+        </div>
+
+        <p class="text-sm text-muted">
+          <strong class="text-navy">Tools used:</strong> Claude Code, HTML/CSS/JS, Tailwind CSS, Git, GitHub Pages
+        </p>
+      </div>
+    </article>
+
+
+    <!-- ── UPCOMING PLACEHOLDER ── -->
+    <div class="day-upcoming reveal pl-6 border-l-2 border-dashed border-border">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="font-heading font-black text-muted text-sm">Day 02</span>
+        <span class="text-xs text-muted">Coming Mar 3, 2026</span>
+      </div>
+      <p class="text-muted text-sm italic">Next entry will be posted tomorrow...</p>
+    </div>
+
+  </div>
+</main>
+
+
+<!-- ── CTA ── -->
+<section class="py-16 px-6 md:px-12 lg:px-24 border-t border-border bg-bg">
+  <div class="max-w-3xl mx-auto text-center">
+    <p class="section-label mb-3">Follow along</p>
+    <h2 class="font-heading font-black text-navy mb-4" style="font-size: clamp(1.4rem, 3vw, 2rem);">
+      Want to see what I build next?
+    </h2>
+    <p class="text-muted mb-6 max-w-md mx-auto">
+      I'll be updating this page daily throughout March. Find me on LinkedIn or GitHub to follow the journey.
+    </p>
+    <div class="flex flex-wrap justify-center gap-4">
+      <a href="https://linkedin.com/in/dulceruvalcaba" target="_blank" rel="noopener noreferrer"
+         class="text-sm font-semibold text-white bg-primary px-5 py-2.5 rounded-lg hover:bg-sky transition-colors duration-200">
+        Follow on LinkedIn
+      </a>
+      <a href="https://github.com/druvalcabavlz" target="_blank" rel="noopener noreferrer"
+         class="text-sm font-medium text-muted hover:text-primary transition-colors duration-200">
+        GitHub ↗
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── FOOTER ── -->
+<footer class="bg-navy border-t border-white/10 py-6 px-6 text-center">
+  <p class="text-muted text-sm">
+    &copy; <span id="year"></span> Dulce Lucero Ruvalcaba Valenzuela &middot;
+    <a href="../index.html" class="hover:text-white transition-colors duration-200">← Back to portfolio</a>
+  </p>
+</footer>
+
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Sticky nav blur
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('nav-scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Animate progress bar on load
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('progress-fill').style.width = '3.33%'; // 1/30
+    }, 400);
+  });
+</script>
+
+</body>
+</html>
