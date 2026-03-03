@@ -140,12 +140,12 @@
     <div class="bg-white border border-border rounded-xl p-5 max-w-sm">
       <div class="flex items-center justify-between mb-3">
         <span class="text-sm font-semibold text-navy">Progress</span>
-        <span class="text-sm font-bold text-primary" id="progress-label">Day 1 of 30</span>
+        <span class="text-sm font-bold text-primary" id="progress-label">Day 2 of 30</span>
       </div>
       <div class="progress-bar">
         <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
       </div>
-      <p class="text-xs text-muted mt-3">1 day completed · 29 to go</p>
+      <p class="text-xs text-muted mt-3">2 days completed · 28 to go</p>
     </div>
 
   </div>
@@ -210,11 +210,74 @@
     </article>
 
 
+    <!-- ── DAY 2 ── -->
+    <article class="day-entry reveal pl-6" id="day-2">
+      <div class="flex flex-wrap items-center gap-3 mb-3">
+        <span class="font-heading font-black text-navy text-sm">Day 02</span>
+        <span class="text-xs font-semibold px-2.5 py-1 rounded-full badge-technical">Technical</span>
+        <span class="text-xs text-muted">Mar 3, 2026</span>
+      </div>
+
+      <h2 class="font-heading font-bold text-navy text-xl mb-3">
+        I built a tool that reads my Gmail and LinkedIn and tells me where every job application stands
+      </h2>
+
+      <div class="text-muted leading-relaxed space-y-4">
+        <p>
+          Job searching is embarrassingly manual. I had recruiter emails in Gmail, LinkedIn InMails I'd half-replied to, and a spreadsheet that was already two weeks behind. Every week I'd spend 20 minutes just <em>finding</em> where things stood — before I could do anything useful with the information.
+        </p>
+        <p>
+          Today I built something to fix it. The tool runs on a schedule, reads both inboxes, uses <strong class="text-navy">Claude</strong> to extract the company, role, and application status from each message, deduplicates everything, and writes a clean Markdown digest. One file, one read, and I know where I stand.
+        </p>
+
+        <p class="font-semibold text-navy">How it works — four steps:</p>
+        <ul class="space-y-2 text-sm pl-1">
+          <li class="flex items-start gap-2"><span class="text-primary mt-0.5 flex-shrink-0">→</span><span><strong class="text-navy">Gmail</strong> — OAuth2 + Gmail API. Keyword query for "application / interview / offer / rejection / recruiter", paginated up to 500 messages, body extracted and truncated to 2000 chars.</span></li>
+          <li class="flex items-start gap-2"><span class="text-primary mt-0.5 flex-shrink-0">→</span><span><strong class="text-navy">LinkedIn</strong> — Playwright with a persistent browser session. Log in once (headful), then it runs headless every day and scrapes your message threads for job-related conversations.</span></li>
+          <li class="flex items-start gap-2"><span class="text-primary mt-0.5 flex-shrink-0">→</span><span><strong class="text-navy">Claude</strong> — messages are batched 20 at a time. Each batch gets serialized into labeled text blocks and sent to Claude with a prompt asking for structured JSON: company, position, status, date, source, notes. I strip any non-JSON prefix before parsing — Claude occasionally adds a brief explanation even when you ask it not to.</span></li>
+          <li class="flex items-start gap-2"><span class="text-primary mt-0.5 flex-shrink-0">→</span><span><strong class="text-navy">Report</strong> — a Markdown file with a stats table, application status table, and Claude-generated highlights. Then a local web UI to view it in the browser.</span></li>
+        </ul>
+
+        <p>
+          The most interesting design problem was the <strong class="text-navy">dedup/merge logic</strong>. You often get 3–4 messages about the same application — a confirmation, a recruiter follow-up, an interview invite. Each one might be parsed as a separate entry. The merge step groups by normalized <code style="font-family:monospace;font-size:0.875em;background:#F3F4F6;padding:0.1em 0.4em;border-radius:4px;color:#1D4ED8;">(company, position)</code>, keeps the most recent date, and resolves status conflicts by priority: <strong class="text-navy">offer → interview → screening → applied → rejected → unknown</strong>. This means if you have an offer and also a confirmation email from the same company, the offer wins.
+        </p>
+
+        <p>
+          I also made LinkedIn failures <strong class="text-navy">non-fatal</strong>. If the browser session expires (which it will), the tool logs a warning and continues with Gmail-only data. A scheduled job shouldn't break because of a stale cookie.
+        </p>
+
+        <div class="bg-bg border border-border rounded-xl p-5 mt-4">
+          <p class="text-sm font-semibold text-navy mb-2">What I learned</p>
+          <ul class="space-y-2 text-sm">
+            <li class="flex items-start gap-2">
+              <span class="text-primary mt-0.5">→</span>
+              Using Claude as a <em>structured extractor</em> — not a generator — is one of its most underrated use cases. Give it raw text, get back clean JSON. It beats regex for messy real-world email content every time.
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-primary mt-0.5">→</span>
+              Designing failure modes matters as much as the happy path. Making LinkedIn non-fatal meant I could schedule the whole thing without babysitting it.
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-primary mt-0.5">→</span>
+              A tool that runs itself is different from a tool you use. The value isn't in the automation — it's in the forcing function. When the digest shows "5 applications with no update in 10 days," you follow up.
+            </li>
+          </ul>
+        </div>
+
+        <p class="text-sm text-muted">
+          <strong class="text-navy">Tools used:</strong> Claude Code, Node.js, TypeScript, Gmail API, OAuth2, Playwright, Claude claude-sonnet-4-6, node-cron
+          &nbsp;·&nbsp;
+          <a href="job-tracker.html" class="text-primary hover:underline">Read the full writeup →</a>
+        </p>
+      </div>
+    </article>
+
+
     <!-- ── UPCOMING PLACEHOLDER ── -->
     <div class="day-upcoming reveal pl-6 border-l-2 border-dashed border-border">
       <div class="flex items-center gap-3 mb-2">
-        <span class="font-heading font-black text-muted text-sm">Day 02</span>
-        <span class="text-xs text-muted">Coming Mar 3, 2026</span>
+        <span class="font-heading font-black text-muted text-sm">Day 03</span>
+        <span class="text-xs text-muted">Coming Mar 4, 2026</span>
       </div>
       <p class="text-muted text-sm italic">Next entry will be posted tomorrow...</p>
     </div>
@@ -276,7 +339,7 @@
   // Animate progress bar on load
   window.addEventListener('load', () => {
     setTimeout(() => {
-      document.getElementById('progress-fill').style.width = '3.33%'; // 1/30
+      document.getElementById('progress-fill').style.width = '6.66%'; // 2/30
     }, 400);
   });
 </script>

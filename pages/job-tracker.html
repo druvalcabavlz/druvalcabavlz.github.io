@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I Built a Job Tracker That Reads My Gmail and LinkedIn | Dulce Lucero</title>
+  <meta name="description" content="A personal automation tool that reads Gmail and LinkedIn messages, uses Claude AI to extract application statuses, and generates a daily digest report." />
+
+  <!-- Security -->
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4PQR9N1WTT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4PQR9N1WTT');
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy:    '#111111',
+            primary: '#2563EB',
+            sky:     '#3B82F6',
+            bg:      '#F9FAFB',
+            surface: '#FFFFFF',
+            border:  '#E5E7EB',
+            muted:   '#6B7280',
+          },
+          fontFamily: {
+            heading: ['Archivo', 'sans-serif'],
+            body:    ['DM Sans', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html  { scroll-behavior: smooth; }
+    body  { font-family: 'DM Sans', sans-serif; background: #FFFFFF; color: #111111; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    h1,h2,h3,h4 { font-family: 'Archivo', sans-serif; }
+
+    .section-label {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: #2563EB;
+    }
+    .nav-scrolled { background: rgba(255,255,255,0.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid #E5E7EB; }
+    .nav-link { transition: color 0.2s ease; }
+    .nav-link:hover { color: #2563EB; }
+    a:focus-visible, button:focus-visible { outline: 2px solid #2563EB; outline-offset: 3px; border-radius: 4px; }
+
+    /* Post body */
+    .post-body { font-size: 1.05rem; color: #374151; }
+    .post-body h2 {
+      font-family: 'Archivo', sans-serif;
+      font-size: 1.35rem; font-weight: 700;
+      color: #111111;
+      margin-top: 2.5rem; margin-bottom: 0.85rem;
+    }
+    .post-body h3 {
+      font-family: 'Archivo', sans-serif;
+      font-size: 1.1rem; font-weight: 600;
+      color: #111111;
+      margin-top: 1.75rem; margin-bottom: 0.6rem;
+    }
+    .post-body p  { margin-bottom: 1.1rem; line-height: 1.75; }
+    .post-body ul { margin-left: 1.35rem; margin-bottom: 1.1rem; }
+    .post-body li { margin-bottom: 0.5rem; line-height: 1.7; }
+    .post-body strong { color: #111111; font-weight: 600; }
+    .post-body em    { font-style: italic; }
+    .post-body a     { color: #2563EB; text-decoration: underline; }
+    .post-body a:hover { color: #1D4ED8; }
+
+    /* Inline code */
+    .post-body code {
+      font-family: 'Courier New', monospace;
+      font-size: 0.875em;
+      background: #F3F4F6;
+      border: 1px solid #E5E7EB;
+      padding: 0.15em 0.45em;
+      border-radius: 4px;
+      color: #1D4ED8;
+    }
+
+    /* Stack pill list */
+    .stack-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0 1.5rem; }
+    .stack-pill {
+      font-size: 0.8rem; font-weight: 500;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      color: #1D4ED8;
+    }
+
+    /* Callout box */
+    .callout {
+      background: #F0FDF4;
+      border: 1px solid #BBF7D0;
+      border-left: 3px solid #16A34A;
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin: 1.5rem 0;
+    }
+    .callout p { margin-bottom: 0; color: #15803D; font-size: 0.95rem; }
+    .callout strong { color: #14532D; }
+
+    /* Demo CTA card */
+    .demo-cta {
+      background: #111111;
+      border-radius: 12px;
+      padding: 1.75rem 2rem;
+      margin: 2rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    @media (min-width: 640px) { .demo-cta { flex-direction: row; align-items: center; justify-content: space-between; } }
+    .demo-cta-text h3 { font-family: 'Archivo', sans-serif; font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 0.3rem; }
+    .demo-cta-text p  { font-size: 0.875rem; color: #9CA3AF; margin-bottom: 0; }
+    .demo-cta-btn {
+      flex-shrink: 0;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem; font-weight: 600;
+      color: #111111; background: #fff;
+      border: none; border-radius: 8px;
+      padding: 0.625rem 1.25rem;
+      text-decoration: none;
+      transition: background 0.2s ease, transform 0.2s ease;
+      white-space: nowrap;
+    }
+    .demo-cta-btn:hover { background: #EFF6FF; color: #1D4ED8; transform: translateY(-1px); }
+
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<header id="site-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <nav class="max-w-5xl mx-auto px-6 md:px-12 lg:px-24 py-5 flex items-center justify-between">
+    <a href="../index.html" aria-label="Back to home" class="font-heading font-bold text-navy text-sm tracking-tight">
+      Dulce Lucero
+    </a>
+    <ul class="flex items-center gap-7 list-none">
+      <li><a href="../index.html#about"      class="nav-link text-muted text-sm">About</a></li>
+      <li><a href="../index.html#skills"     class="nav-link text-muted text-sm">Skills</a></li>
+      <li><a href="../index.html#experience" class="nav-link text-muted text-sm">Experience</a></li>
+      <li><a href="blog.html"               class="nav-link text-primary text-sm font-semibold">Writing</a></li>
+      <li><a href="../index.html#contact"    class="nav-link text-primary text-sm font-semibold">Hire Me</a></li>
+    </ul>
+  </nav>
+</header>
+
+
+<!-- ── ARTICLE HERO ── -->
+<section class="pt-36 pb-12 px-6 md:px-12 lg:px-24 border-b border-border">
+  <div class="max-w-3xl mx-auto">
+    <a href="blog.html" class="inline-flex items-center gap-1.5 text-sm text-muted hover:text-primary transition-colors duration-200 mb-6">
+      ← Back to Writing
+    </a>
+    <p class="section-label mb-3">Tools &amp; Workflow</p>
+    <h1 class="font-heading font-black text-navy leading-tight mb-5" style="font-size: clamp(1.8rem, 5vw, 2.8rem);">
+      I Built a Job Tracker That Reads My Gmail and LinkedIn
+    </h1>
+    <p class="text-muted text-lg leading-relaxed mb-6 max-w-2xl">
+      A personal automation tool that reads both inboxes, uses Claude AI to extract application statuses, and drops a clean digest in my terminal every morning.
+    </p>
+    <div class="flex flex-wrap items-center gap-4 text-sm text-muted">
+      <span>Mar 2026</span>
+      <span>·</span>
+      <span>6 min read</span>
+      <span>·</span>
+      <a href="job-tracker-demo.html" class="text-primary font-medium hover:underline">View live demo →</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── ARTICLE BODY ── -->
+<main class="py-14 px-6 md:px-12 lg:px-24">
+  <article class="max-w-3xl mx-auto post-body">
+
+    <p>
+      Job searching is embarrassingly scattered. You have recruiter emails in Gmail, LinkedIn InMails, follow-ups you haven't replied to, and a spreadsheet that's two weeks behind. Every week I'd spend 20 minutes just <em>finding</em> where things stood — before I could do anything useful with the information.
+    </p>
+    <p>
+      So I built a tool to fix it. It runs every morning, reads my Gmail and LinkedIn messages, uses Claude to figure out what's an application update and what stage it's at, and writes a clean Markdown digest to a file. Then I open it, take 90 seconds to scan it, and actually know what's going on.
+    </p>
+
+    <h2>The problem in one sentence</h2>
+    <p>
+      Job search status lives in two places (Gmail and LinkedIn), in unstructured form, scattered over time — and manually triaging it every day is exactly the kind of repetitive cognitive work that software should handle.
+    </p>
+
+    <h2>What it does</h2>
+    <p>
+      The tool has four steps:
+    </p>
+    <ul>
+      <li><strong>Fetches Gmail</strong> — uses the Gmail API with OAuth2 to pull emails from the last 14 days matching keywords like <code>application</code>, <code>interview</code>, <code>offer</code>, <code>rejection</code>, <code>recruiter</code>.</li>
+      <li><strong>Scrapes LinkedIn</strong> — uses Playwright with a persistent browser session to pull messages from your inbox, filtered to conversations that mention job-related keywords.</li>
+      <li><strong>Runs everything through Claude</strong> — batches messages in groups of 20 and asks Claude to extract the company, position, and status (applied / screening / interview / offer / rejected / unknown). It also generates a highlights section with the most notable activity.</li>
+      <li><strong>Writes a digest report</strong> — outputs a Markdown file with a stats table, application status table, and highlights. One file, one date, done.</li>
+    </ul>
+
+    <div class="callout">
+      <p><strong>Non-obvious design choice:</strong> LinkedIn failures are non-fatal. If the browser session expires, the tool logs a warning and continues with Gmail-only data. Scheduling shouldn't break because of a stale LinkedIn cookie.</p>
+    </div>
+
+    <h2>The stack</h2>
+    <div class="stack-pills">
+      <span class="stack-pill">Node.js + TypeScript</span>
+      <span class="stack-pill">tsx (no build step)</span>
+      <span class="stack-pill">Gmail API + OAuth2</span>
+      <span class="stack-pill">Playwright</span>
+      <span class="stack-pill">Claude (claude-sonnet-4-6)</span>
+      <span class="stack-pill">node-cron</span>
+    </div>
+    <p>
+      I picked <code>tsx</code> over a full TypeScript compile setup because this is a personal tool — I want to run <code>npm run digest</code> and have it just work, without a build step in the way. The tradeoff is slightly slower cold starts, which don't matter here.
+    </p>
+    <p>
+      The Gmail integration uses standard OAuth2 with a refresh token stored in <code>.credentials.json</code>. One-time interactive setup, then silent refresh on every run. LinkedIn uses a persistent Playwright browser context in <code>.browser-state/</code> — same idea: log in once, headless from then on.
+    </p>
+
+    <h2>Using Claude as a parser, not a generator</h2>
+    <p>
+      The most interesting part of the architecture is how Claude fits in. I'm not using it to write anything — I'm using it as a structured extractor. I serialize batches of 20 raw messages and ask it to return a JSON array of <code>{ company, position, status, lastActivity, source, notes }</code> objects.
+    </p>
+    <p>
+      The response parsing strips any non-JSON prefix or suffix before calling <code>JSON.parse</code> — because Claude sometimes adds a brief explanation before the array, even when you ask it not to. Handling that edge case prevents the whole batch from failing.
+    </p>
+    <p>
+      After extraction, a <code>deduplicateAndMerge</code> function groups entries by normalized <code>(company, position)</code> key, keeps the most recent date, and resolves status conflicts by priority: <strong>offer &gt; interview &gt; screening &gt; applied &gt; rejected &gt; unknown</strong>. This matters because you often get multiple messages about the same application.
+    </p>
+
+    <h2>The output</h2>
+    <p>
+      A daily Markdown file that looks like this — a stats table, a status table with emoji indicators, and Claude-generated highlights:
+    </p>
+
+    <!-- Demo CTA -->
+    <div class="demo-cta">
+      <div class="demo-cta-text">
+        <h3>See a real sample report</h3>
+        <p>Mock data with 10 applications, 2 interviews, 1 offer — rendered as a live page.</p>
+      </div>
+      <a href="job-tracker-demo.html" class="demo-cta-btn">
+        View demo →
+      </a>
+    </div>
+
+    <h2>What I'd do differently</h2>
+    <p>
+      Right now the LinkedIn scraper is brittle — it depends on CSS selectors that LinkedIn changes without warning. The right fix is probably to use the LinkedIn API (requires a partnership application) or move to email-only and ask recruiters to always follow up via email. For a personal tool, the current approach is good enough.
+    </p>
+    <p>
+      I'd also add a persistent SQLite store so the tool can detect <em>changes</em> in status over time, rather than re-extracting everything from scratch on each run. That's the next version.
+    </p>
+
+    <h2>Running it</h2>
+    <p>
+      Setup is three commands after you've put your API keys in <code>.env</code>:
+    </p>
+    <ul>
+      <li><code>npm run setup:gmail</code> — opens a browser OAuth flow, saves your refresh token</li>
+      <li><code>npm run setup:linkedin</code> — opens a headed Chromium window, you log in, session is saved</li>
+      <li><code>npm run digest</code> — runs end-to-end and writes <code>reports/digest-YYYY-MM-DD.md</code></li>
+    </ul>
+    <p>
+      There's also <code>npm run start</code> for a cron daemon that runs on a schedule (default: 7am daily), and <code>npm run web</code> for a local web UI that shows the latest digest and has a "Run Digest" button.
+    </p>
+
+    <h2>The actual value</h2>
+    <p>
+      Honestly, the value isn't the automation. It's the forcing function. When the digest runs and shows you "5 applications with no updates in 10+ days," you follow up. When you see "offer deadline: Mar 3" in the highlights, you don't miss it. The tool makes your job search legible — and legible things get acted on.
+    </p>
+    <p>
+      This is something a spreadsheet can technically do. But a spreadsheet requires you to maintain it. This one runs itself.
+    </p>
+
+    <!-- Final demo link -->
+    <div class="callout" style="background:#EFF6FF; border-color:#BFDBFE; border-left-color:#2563EB;">
+      <p style="color:#1D4ED8;">
+        <strong style="color:#1E40AF;">See it in action →</strong>
+        Check out the <a href="job-tracker-demo.html">live demo page</a> with mock data showing what a real digest looks like.
+      </p>
+    </div>
+
+  </article>
+</main>
+
+
+<!-- ── FOOTER ── -->
+<footer class="bg-navy border-t border-white/10 py-6 px-6 text-center">
+  <p class="text-muted text-sm">
+    &copy; <span id="year"></span> Dulce Lucero Ruvalcaba Valenzuela &middot;
+    <a href="blog.html" class="hover:text-white transition-colors duration-200">← Back to Writing</a>
+  </p>
+</footer>
+
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('nav-scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

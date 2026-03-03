@@ -187,6 +187,16 @@
 
     /* ─── Timeline draw-in ─── */
     .tl-drawn::before { transform: scaleY(1) !important; }
+
+    /* ─── Matcher quiz buttons ─── */
+    .matcher-btn { background: transparent; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+    .matcher-btn.selected { border-color: #2563EB !important; background: rgba(37,99,235,0.18) !important; }
+    .matcher-btn:focus-visible { outline: 2px solid #2563EB; outline-offset: 2px; border-radius: 0.75rem; }
+
+    /* ─── Building status badges ─── */
+    .status-live  { background: #F0FDF4; color: #15803D; border-color: #BBF7D0; }
+    .status-ship  { background: #EFF6FF; color: #1D4ED8; border-color: #BFDBFE; }
+    .status-soon  { background: #FFFBEB; color: #B45309; border-color: #FDE68A; }
   </style>
 </head>
 
@@ -321,6 +331,71 @@
 
 
 <!-- ════════════════════════════════════════
+     CURRENTLY BUILDING
+════════════════════════════════════════ -->
+<section id="building" class="py-24 px-6 md:px-12 lg:px-24 bg-bg border-t border-border">
+  <div class="max-w-5xl mx-auto">
+
+    <div class="reveal flex items-center justify-between mb-12">
+      <div>
+        <p class="section-label mb-3">Now</p>
+        <h2 class="font-heading font-black text-navy" style="font-size: clamp(1.5rem, 3vw, 2.2rem);">
+          Currently Building
+        </h2>
+      </div>
+      <div class="flex items-center gap-2 text-xs text-muted flex-shrink-0">
+        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+        Live · Updated manually
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-5">
+
+      <!-- Project 1: 30 Days AI -->
+      <div class="reveal bg-surface border border-border rounded-xl p-6 exp-card flex flex-col">
+        <span class="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full status-live border mb-4 self-start">
+          <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+          In Progress
+        </span>
+        <h3 class="font-heading font-bold text-navy mb-2">30 Days AI Challenge</h3>
+        <p class="text-muted text-sm leading-relaxed mb-4 flex-1">
+          One new AI experiment every day — tools, art, automations, builds. A public learning log.
+        </p>
+        <a href="pages/30-days-ai-challenge.html" class="text-sm font-medium text-primary hover:underline self-start">View progress →</a>
+      </div>
+
+      <!-- Project 2: This Portfolio -->
+      <div class="reveal bg-surface border border-border rounded-xl p-6 exp-card flex flex-col" style="transition-delay: 0.08s">
+        <span class="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full status-ship border mb-4 self-start">
+          <span class="w-1.5 h-1.5 rounded-full bg-primary rounded-full"></span>
+          Shipped
+        </span>
+        <h3 class="font-heading font-bold text-navy mb-2">This Portfolio</h3>
+        <p class="text-muted text-sm leading-relaxed mb-4 flex-1">
+          Built entirely with Claude Code and plain HTML/CSS/JS. No frameworks, no build step. Deployed to GitHub Pages.
+        </p>
+        <a href="https://github.com/druvalcabavlz" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-primary hover:underline self-start">View on GitHub →</a>
+      </div>
+
+      <!-- Project 3: AI PM Toolkit -->
+      <div class="reveal bg-surface border border-border rounded-xl p-6 exp-card flex flex-col" style="transition-delay: 0.16s">
+        <span class="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full status-soon border mb-4 self-start">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+          Exploring
+        </span>
+        <h3 class="font-heading font-bold text-navy mb-2">AI PM Toolkit</h3>
+        <p class="text-muted text-sm leading-relaxed mb-4 flex-1">
+          A curated set of Claude prompts, templates, and agent workflows built specifically for product managers.
+        </p>
+        <span class="text-xs text-muted italic">Coming soon</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
      ABOUT
 ════════════════════════════════════════ -->
 <section id="about" class="py-24 px-6 md:px-12 lg:px-24 bg-surface diagonal-bottom">
@@ -401,6 +476,127 @@
       </div>
 
     </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     WORK WITH ME MATCHER
+════════════════════════════════════════ -->
+<section id="matcher" class="py-24 px-6 md:px-12 lg:px-24 bg-navy">
+  <div class="max-w-5xl mx-auto">
+
+    <div class="reveal text-center mb-12">
+      <p class="section-label mb-3" style="color: #93C5FD">Find your fit</p>
+      <h2 class="font-heading font-black text-white leading-tight mb-4" style="font-size: clamp(1.8rem, 4vw, 2.8rem);">
+        Are we a match?
+      </h2>
+      <p class="max-w-lg mx-auto text-base leading-relaxed" style="color: #9CA3AF">
+        Answer 3 quick questions and I'll surface the most relevant part of my experience for your situation.
+      </p>
+    </div>
+
+    <!-- Quiz container -->
+    <div id="matcher-quiz" class="max-w-2xl mx-auto">
+
+      <!-- Progress -->
+      <div class="mb-8 reveal">
+        <div class="flex justify-between mb-2" style="font-size: 0.75rem; color: #6B7280">
+          <span id="matcher-step-label">Step 1 of 3</span>
+          <span id="matcher-pct">0%</span>
+        </div>
+        <div class="w-full rounded-full overflow-hidden" style="height: 3px; background: rgba(255,255,255,0.12)">
+          <div id="matcher-bar" class="h-full rounded-full transition-all duration-500" style="width:0%; background:#2563EB"></div>
+        </div>
+      </div>
+
+      <!-- Step 1 -->
+      <div id="matcher-step-1" class="reveal">
+        <p class="font-heading font-bold text-white text-lg mb-5">What stage is your company?</p>
+        <div class="grid grid-cols-2 gap-3">
+          <button data-q="stage" data-v="early" class="matcher-btn text-left p-4 rounded-xl border border-white/20 text-white hover:border-primary hover:bg-primary/10 transition-all duration-200">
+            <span class="block font-semibold text-sm">Seed / Early-stage</span>
+            <span class="block text-xs mt-1" style="color:#6B7280">Building the first thing</span>
+          </button>
+          <button data-q="stage" data-v="growth" class="matcher-btn text-left p-4 rounded-xl border border-white/20 text-white hover:border-primary hover:bg-primary/10 transition-all duration-200">
+            <span class="block font-semibold text-sm">Series A/B+</span>
+            <span class="block text-xs mt-1" style="color:#6B7280">Scaling what works</span>
+          </button>
+          <button data-q="stage" data-v="enterprise" class="matcher-btn text-left p-4 rounded-xl border border-white/20 text-white hover:border-primary hover:bg-primary/10 transition-all duration-200">
+            <span class="block font-semibold text-sm">Enterprise</span>
+            <span class="block text-xs mt-1" style="color:#6B7280">Large org, complex stakeholders</span>
+          </button>
+          <button data-q="stage" data-v="agency" class="matcher-btn text-left p-4 rounded-xl border border-white/20 text-white hover:border-primary hover:bg-primary/10 transition-all duration-200">
+            <span class="block font-semibold text-sm">Agency / Consulting</span>
+            <span class="block text-xs mt-1" style="color:#6B7280">Delivering for multiple clients</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 2 (hidden) -->
+      <div id="matcher-step-2" class="reveal hidden">
+        <p class="font-heading font-bold text-white text-lg mb-5">What type of product are you building?</p>
+        <div class="grid grid-cols-2 gap-3">
+          <button data-q="product" data-v="ai" class="matcher-btn text-left p-4 rounded-xl border border-white/20 text-white hover:border-primary hover:bg-primary/10 transition-all duration-200">
+            <span class="block font-semibold text-sm">AI / ML powered</span>
+            <span class="block text-xs mt-1" style="color:#6B7280">Models, recommendations, automation</span>
+          </button>
+          <button data-q="product" data-v="consumer" class="matcher-btn text-left p-4 rounded-xl border border-white/20 text-white hover:border-primary hover:bg-primary/10 transition-all duration-200">
+            <span class="block font-semibold text-sm">Consumer / B2C</span>
+            <span class="block text-xs mt-1" style="color:#6B7280">Apps used by end users</span>
+          </button>
+          <button data-q="product" data-v="b2b" class="matcher-btn text-left p-4 rounded-xl border border-white/20 text-white hover:border-primary hover:bg-primary/10 transition-all duration-200">
+            <span class="block font-semibold text-sm">B2B SaaS / Platform</span>
+            <span class="block text-xs mt-1" style="color:#6B7280">Business software or APIs</span>
+          </button>
+          <button data-q="product" data-v="fintech" class="matcher-btn text-left p-4 rounded-xl border border-white/20 text-white hover:border-primary hover:bg-primary/10 transition-all duration-200">
+            <span class="block font-semibold text-sm">Fintech / Regulated</span>
+            <span class="block text-xs mt-1" style="color:#6B7280">Financial products, compliance-heavy</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 3 (hidden) -->
+      <div id="matcher-step-3" class="reveal hidden">
+        <p class="font-heading font-bold text-white text-lg mb-5">What's your biggest challenge right now?</p>
+        <div class="grid grid-cols-2 gap-3">
+          <button data-q="challenge" data-v="build" class="matcher-btn text-left p-4 rounded-xl border border-white/20 text-white hover:border-primary hover:bg-primary/10 transition-all duration-200">
+            <span class="block font-semibold text-sm">Building 0→1</span>
+            <span class="block text-xs mt-1" style="color:#6B7280">Starting from scratch</span>
+          </button>
+          <button data-q="challenge" data-v="scale" class="matcher-btn text-left p-4 rounded-xl border border-white/20 text-white hover:border-primary hover:bg-primary/10 transition-all duration-200">
+            <span class="block font-semibold text-sm">Scale &amp; metrics</span>
+            <span class="block text-xs mt-1" style="color:#6B7280">Improving key numbers</span>
+          </button>
+          <button data-q="challenge" data-v="align" class="matcher-btn text-left p-4 rounded-xl border border-white/20 text-white hover:border-primary hover:bg-primary/10 transition-all duration-200">
+            <span class="block font-semibold text-sm">Cross-functional alignment</span>
+            <span class="block text-xs mt-1" style="color:#6B7280">Coordinating complex teams</span>
+          </button>
+          <button data-q="challenge" data-v="data" class="matcher-btn text-left p-4 rounded-xl border border-white/20 text-white hover:border-primary hover:bg-primary/10 transition-all duration-200">
+            <span class="block font-semibold text-sm">Data &amp; analytics</span>
+            <span class="block text-xs mt-1" style="color:#6B7280">Metrics, experiments, insights</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Result (hidden) -->
+      <div id="matcher-result" class="hidden" style="animation: fadeUp 0.4s ease both">
+        <div class="bg-white rounded-2xl p-7">
+          <p class="section-label mb-2">Your match</p>
+          <h3 id="result-headline" class="font-heading font-bold text-navy text-xl leading-snug mb-5"></h3>
+          <ul id="result-points" class="space-y-3 mb-6"></ul>
+          <div class="flex flex-wrap gap-3 items-center">
+            <a href="#contact" class="text-sm font-semibold text-white bg-primary px-5 py-2.5 rounded-lg hover:bg-sky transition-colors duration-200">
+              Let's talk →
+            </a>
+            <button id="matcher-reset" class="text-sm font-medium text-muted hover:text-navy transition-colors duration-200 bg-transparent border-none cursor-pointer p-0">
+              Start over
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /quiz -->
   </div>
 </section>
 
@@ -684,6 +880,95 @@
 
 
 <!-- ════════════════════════════════════════
+     WRITING
+════════════════════════════════════════ -->
+<section id="writing" class="py-24 px-6 md:px-12 lg:px-24 bg-white border-t border-border">
+  <div class="max-w-5xl mx-auto">
+
+    <div class="reveal flex items-end justify-between mb-12">
+      <div>
+        <p class="section-label mb-3">Writing</p>
+        <h2 class="font-heading font-black text-navy" style="font-size: clamp(1.5rem, 3vw, 2.2rem);">
+          Thoughts on AI, product &amp; craft
+        </h2>
+      </div>
+      <a href="pages/blog.html" class="text-sm font-medium text-primary hover:underline hidden sm:block">
+        All posts →
+      </a>
+    </div>
+
+    <!-- Featured: 30-day challenge (full width) -->
+    <a href="pages/30-days-ai-challenge.html" class="reveal group flex flex-col sm:flex-row sm:items-center gap-5 bg-white border-2 border-primary rounded-2xl p-6 mb-6 hover:shadow-md transition-all duration-200 cursor-pointer">
+      <div class="flex-1">
+        <div class="flex flex-wrap items-center gap-2 mb-2">
+          <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-primary/10 text-primary">🔥 Live Challenge</span>
+          <span class="text-xs text-muted">Updated daily</span>
+        </div>
+        <h3 class="font-heading font-bold text-navy text-lg mb-2 group-hover:text-primary transition-colors duration-200">
+          30 Days AI Challenge
+        </h3>
+        <p class="text-muted text-sm leading-relaxed">
+          Every day this month I'm doing one new thing with AI — art, tools, builds, automations. A live public learning log.
+        </p>
+      </div>
+      <div class="flex-shrink-0 flex flex-col items-center justify-center bg-bg border border-border rounded-xl px-5 py-3 min-w-[84px]">
+        <span class="font-heading font-black text-primary text-2xl">2</span>
+        <span class="text-xs text-muted">of 30</span>
+      </div>
+    </a>
+
+    <div class="grid md:grid-cols-3 gap-6">
+
+      <!-- Post: Job Tracker (newest) -->
+      <a href="pages/job-tracker.html" class="reveal group bg-bg border border-border rounded-xl p-6 flex flex-col hover:border-primary hover:shadow-sm transition-all duration-200 cursor-pointer">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="text-xs font-semibold text-primary uppercase tracking-widest">Tools &amp; Workflow</span>
+          <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-primary/10 text-primary">New</span>
+        </div>
+        <h3 class="font-heading font-bold text-navy text-base leading-snug mb-3 group-hover:text-primary transition-colors duration-200">
+          I Built a Job Tracker That Reads My Gmail and LinkedIn
+        </h3>
+        <p class="text-muted text-sm leading-relaxed flex-1">
+          A personal automation tool that reads both inboxes, uses Claude AI to extract application statuses, and drops a clean digest every morning.
+        </p>
+        <p class="text-xs text-muted mt-5">Mar 2026 · 6 min read</p>
+      </a>
+
+      <!-- Post 1 -->
+      <a href="pages/blog.html" class="reveal group bg-bg border border-border rounded-xl p-6 flex flex-col hover:border-primary hover:shadow-sm transition-all duration-200 cursor-pointer" style="transition-delay: 0.08s">
+        <span class="text-xs font-semibold text-primary uppercase tracking-widest mb-4">AI &amp; Product</span>
+        <h3 class="font-heading font-bold text-navy text-base leading-snug mb-3 group-hover:text-primary transition-colors duration-200">
+          Why Every PM Should Learn to Prompt Engineer
+        </h3>
+        <p class="text-muted text-sm leading-relaxed flex-1">
+          Prompting isn't a technical skill — it's a thinking skill. Here's why it's becoming the most important tool in a PM's kit.
+        </p>
+        <p class="text-xs text-muted mt-5">Mar 2026 · 4 min read</p>
+      </a>
+
+      <!-- Post 2 -->
+      <a href="pages/blog.html" class="reveal group bg-bg border border-border rounded-xl p-6 flex flex-col hover:border-primary hover:shadow-sm transition-all duration-200 cursor-pointer" style="transition-delay: 0.16s">
+        <span class="text-xs font-semibold text-primary uppercase tracking-widest mb-4">Career</span>
+        <h3 class="font-heading font-bold text-navy text-base leading-snug mb-3 group-hover:text-primary transition-colors duration-200">
+          10 Years in Product: What Actually Moves the Needle
+        </h3>
+        <p class="text-muted text-sm leading-relaxed flex-1">
+          Frameworks are overrated. Taste, speed, and knowing when to say no are underrated. A few honest lessons from a decade of shipping.
+        </p>
+        <p class="text-xs text-muted mt-5">Jan 2026 · 6 min read</p>
+      </a>
+
+    </div>
+
+    <div class="mt-8 text-center sm:hidden">
+      <a href="pages/blog.html" class="text-sm font-medium text-primary hover:underline">All posts →</a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
      EDUCATION / CERTS
 ════════════════════════════════════════ -->
 <section class="py-16 px-6 md:px-12 lg:px-24 bg-bg">
@@ -717,92 +1002,6 @@
         <p class="text-muted text-xs mt-1">DevF · 2017</p>
       </div>
     </div>
-  </div>
-</section>
-
-
-<!-- ════════════════════════════════════════
-     WRITING
-════════════════════════════════════════ -->
-<section id="writing" class="py-24 px-6 md:px-12 lg:px-24 bg-white border-t border-border">
-  <div class="max-w-5xl mx-auto">
-
-    <div class="reveal flex items-end justify-between mb-12">
-      <div>
-        <p class="section-label mb-3">Writing</p>
-        <h2 class="font-heading font-black text-navy" style="font-size: clamp(1.5rem, 3vw, 2.2rem);">
-          Thoughts on AI, product &amp; craft
-        </h2>
-      </div>
-      <a href="pages/blog.html" class="text-sm font-medium text-primary hover:underline hidden sm:block">
-        All posts →
-      </a>
-    </div>
-
-    <!-- Featured: 30-day challenge (full width) -->
-    <a href="pages/30-days-ai-challenge.html" class="reveal group flex flex-col sm:flex-row sm:items-center gap-5 bg-white border-2 border-primary rounded-2xl p-6 mb-6 hover:shadow-md transition-all duration-200 cursor-pointer">
-      <div class="flex-1">
-        <div class="flex flex-wrap items-center gap-2 mb-2">
-          <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-primary/10 text-primary">🔥 Live Challenge</span>
-          <span class="text-xs text-muted">Updated daily</span>
-        </div>
-        <h3 class="font-heading font-bold text-navy text-lg mb-2 group-hover:text-primary transition-colors duration-200">
-          30 Days AI Challenge
-        </h3>
-        <p class="text-muted text-sm leading-relaxed">
-          Every day this month I'm doing one new thing with AI — art, tools, builds, automations. A live public learning log.
-        </p>
-      </div>
-      <div class="flex-shrink-0 flex flex-col items-center justify-center bg-bg border border-border rounded-xl px-5 py-3 min-w-[84px]">
-        <span class="font-heading font-black text-primary text-2xl">1</span>
-        <span class="text-xs text-muted">of 30</span>
-      </div>
-    </a>
-
-    <div class="grid md:grid-cols-3 gap-6">
-
-      <!-- Post 1 -->
-      <a href="pages/blog.html" class="reveal group bg-bg border border-border rounded-xl p-6 flex flex-col hover:border-primary hover:shadow-sm transition-all duration-200 cursor-pointer">
-        <span class="text-xs font-semibold text-primary uppercase tracking-widest mb-4">AI &amp; Product</span>
-        <h3 class="font-heading font-bold text-navy text-base leading-snug mb-3 group-hover:text-primary transition-colors duration-200">
-          Why Every PM Should Learn to Prompt Engineer
-        </h3>
-        <p class="text-muted text-sm leading-relaxed flex-1">
-          Prompting isn't a technical skill — it's a thinking skill. Here's why it's becoming the most important tool in a PM's kit.
-        </p>
-        <p class="text-xs text-muted mt-5">Mar 2026 · 4 min read</p>
-      </a>
-
-      <!-- Post 2 -->
-      <a href="pages/blog.html" class="reveal group bg-bg border border-border rounded-xl p-6 flex flex-col hover:border-primary hover:shadow-sm transition-all duration-200 cursor-pointer" style="transition-delay: 0.08s">
-        <span class="text-xs font-semibold text-primary uppercase tracking-widest mb-4">Career</span>
-        <h3 class="font-heading font-bold text-navy text-base leading-snug mb-3 group-hover:text-primary transition-colors duration-200">
-          10 Years in Product: What Actually Moves the Needle
-        </h3>
-        <p class="text-muted text-sm leading-relaxed flex-1">
-          Frameworks are overrated. Taste, speed, and knowing when to say no are underrated. A few honest lessons from a decade of shipping.
-        </p>
-        <p class="text-xs text-muted mt-5">Jan 2026 · 6 min read</p>
-      </a>
-
-      <!-- Post 3 -->
-      <a href="pages/blog.html" class="reveal group bg-bg border border-border rounded-xl p-6 flex flex-col hover:border-primary hover:shadow-sm transition-all duration-200 cursor-pointer" style="transition-delay: 0.16s">
-        <span class="text-xs font-semibold text-primary uppercase tracking-widest mb-4">Tools &amp; Workflow</span>
-        <h3 class="font-heading font-bold text-navy text-base leading-snug mb-3 group-hover:text-primary transition-colors duration-200">
-          My PM Workflow with Claude Code and Cursor
-        </h3>
-        <p class="text-muted text-sm leading-relaxed flex-1">
-          I'm not an engineer, but I ship code. Here's the exact setup I use to prototype, review specs, and move 3× faster than before.
-        </p>
-        <p class="text-xs text-muted mt-5">Dec 2025 · 5 min read</p>
-      </a>
-
-    </div>
-
-    <div class="mt-8 text-center sm:hidden">
-      <a href="pages/blog.html" class="text-sm font-medium text-primary hover:underline">All posts →</a>
-    </div>
-
   </div>
 </section>
 
@@ -1054,6 +1253,152 @@
   // Mobile floating CTA
   document.getElementById('hire-cta')
     ?.addEventListener('click', () => track('cta_click', { label: 'mobile_hire_me' }));
+
+  // ─── Work With Me Matcher
+  (function() {
+    const answers = {};
+    const steps   = { 1: document.getElementById('matcher-step-1'), 2: document.getElementById('matcher-step-2'), 3: document.getElementById('matcher-step-3') };
+    const resultEl    = document.getElementById('matcher-result');
+    const headlineEl  = document.getElementById('result-headline');
+    const pointsEl    = document.getElementById('result-points');
+    const barEl       = document.getElementById('matcher-bar');
+    const stepLabelEl = document.getElementById('matcher-step-label');
+    const pctEl       = document.getElementById('matcher-pct');
+
+    if (!steps[1]) return; // section not present
+
+    const matchResults = {
+      ai: {
+        headline: "You're building an AI product — I've led one from zero to launch.",
+        points: [
+          "Led a 0→1 AI-powered recommendations engine at EPAM end-to-end: defined model inputs, feedback loops, and quality thresholds directly with the data science team.",
+          "Drove a +10% conversion lift through personalization and A/B-tested relevance improvements.",
+          "I don't just write specs for AI features — I know how to define what 'good' looks like for a model and measure it in production."
+        ]
+      },
+      fintech: {
+        headline: "You're in fintech — I've navigated compliance, APIs, and regulated complexity.",
+        points: [
+          "At Stori, led a 0→1 white label API platform for Mastercard credit card issuance: endpoint design, auth flows, card controls — all aligned with compliance, legal, and risk.",
+          "At Paystand, owned the Account Receivable product responsible for 80% of company revenue.",
+          "I know how to move fast in regulated environments without breaking what matters."
+        ]
+      },
+      data: {
+        headline: "You need data-driven decisions — I define metrics before I write specs.",
+        points: [
+          "KPI frameworks, experimentation design, and A/B testing are core to how I run discovery — not afterthoughts.",
+          "Used SQL and Metabase daily at Paystand to drive roadmap decisions with real numbers.",
+          "At Clivi Health, data led to a +20% satisfaction improvement and +25% usage rate increase."
+        ]
+      },
+      scale: {
+        headline: "You're scaling and need a PM accountable for real metrics.",
+        points: [
+          "+10% conversion at EPAM through AI personalization and iterative A/B testing.",
+          "+20% user satisfaction and +25% usage rate at Clivi Health through data-backed product work.",
+          "+27% client interaction at Digital on Us delivering merchandising tech for a major U.S. retailer."
+        ]
+      },
+      build: {
+        headline: "You're building 0→1 — I've done it multiple times, in multiple industries.",
+        points: [
+          "Built the AI recommendations engine at EPAM from zero: roadmap, discovery, launch, and everything between.",
+          "Launched a 0→1 white label credit card API platform at Stori (Mastercard issuance, full compliance scope).",
+          "I'm comfortable with ambiguity, fast at forming hypotheses, and clear on when to stop exploring and start shipping."
+        ]
+      },
+      enterprise: {
+        headline: "You're in a complex org — I've led cross-functional delivery across 3 continents.",
+        points: [
+          "At Wizeline, delivered 5 international projects across Asia, South America, and Canada, aligning distributed teams.",
+          "At EPAM, coordinated engineering, data science, legal, and design across a matrix org to ship on time.",
+          "I write clearly, communicate trade-offs to executives, and know how to keep cross-functional teams moving."
+        ]
+      },
+      b2b: {
+        headline: "You're building B2B software — I've owned revenue-critical products.",
+        points: [
+          "At Paystand, owned the Account Receivable product responsible for 80% of company revenue — full roadmap, 2 quarters planned.",
+          "At Stori, built a B2B white label API platform for credit card issuance across partner banks.",
+          "I understand enterprise buyers, sales cycles, and how to prioritize when every customer thinks their request is the most urgent."
+        ]
+      },
+      default: {
+        headline: "10 years, 6 industries, and one constant: shipping things that actually work.",
+        points: [
+          "AI, fintech, healthtech, e-commerce, SaaS — I've shipped meaningful products across all of them.",
+          "I combine PM fundamentals (discovery, roadmap, metrics) with AI fluency (model inputs, feedback loops, experimentation).",
+          "Bilingual (ES/EN), remote-ready, and actively looking for the next great team."
+        ]
+      }
+    };
+
+    function getResult(stage, product, challenge) {
+      const scores = { ai: 0, fintech: 0, data: 0, scale: 0, build: 0, enterprise: 0, b2b: 0 };
+      if (stage === 'early')      { scores.build += 2; scores.ai += 1; }
+      if (stage === 'growth')     { scores.scale += 2; scores.b2b += 1; }
+      if (stage === 'enterprise') { scores.enterprise += 3; }
+      if (stage === 'agency')     { scores.enterprise += 2; scores.scale += 1; }
+      if (product === 'ai')       { scores.ai += 4; }
+      if (product === 'consumer') { scores.scale += 1; scores.data += 1; }
+      if (product === 'b2b')      { scores.b2b += 4; }
+      if (product === 'fintech')  { scores.fintech += 4; }
+      if (challenge === 'build')  { scores.build += 3; scores.ai += 1; }
+      if (challenge === 'scale')  { scores.scale += 3; scores.data += 1; }
+      if (challenge === 'align')  { scores.enterprise += 2; }
+      if (challenge === 'data')   { scores.data += 4; scores.scale += 1; }
+      const top = Object.entries(scores).sort((a, b) => b[1] - a[1])[0];
+      return matchResults[top[0]] || matchResults.default;
+    }
+
+    function showStep(n) {
+      Object.values(steps).forEach(s => s && s.classList.add('hidden'));
+      resultEl && resultEl.classList.add('hidden');
+      const pct = Math.min(Math.round((n - 1) / 3 * 100), 100);
+      barEl.style.width = pct + '%';
+      pctEl.textContent = pct + '%';
+      if (n <= 3) {
+        steps[n] && steps[n].classList.remove('hidden');
+        stepLabelEl.textContent = 'Step ' + n + ' of 3';
+      } else {
+        barEl.style.width = '100%';
+        pctEl.textContent = '100%';
+        stepLabelEl.textContent = 'Done!';
+        const r = getResult(answers.stage, answers.product, answers.challenge);
+        headlineEl.textContent = r.headline;
+        pointsEl.innerHTML = r.points.map(p =>
+          '<li class="flex items-start gap-2.5 text-sm" style="color:#6B7280">' +
+          '<svg class="w-4 h-4 flex-shrink-0 mt-0.5" style="color:#2563EB" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>' +
+          p + '</li>'
+        ).join('');
+        resultEl && resultEl.classList.remove('hidden');
+        track('matcher_complete', { stage: answers.stage, product: answers.product, challenge: answers.challenge });
+      }
+    }
+
+    document.getElementById('matcher-quiz') && document.getElementById('matcher-quiz').addEventListener('click', function(e) {
+      const btn = e.target.closest('[data-q]');
+      if (!btn) return;
+      const q = btn.dataset.q;
+      const v = btn.dataset.v;
+      answers[q] = v;
+      btn.closest('.grid').querySelectorAll('.matcher-btn').forEach(function(b) { b.classList.remove('selected'); });
+      btn.classList.add('selected');
+      track('matcher_answer', { question: q, answer: v });
+      setTimeout(function() {
+        if (q === 'stage')     showStep(2);
+        else if (q === 'product')   showStep(3);
+        else if (q === 'challenge') showStep(4);
+      }, 280);
+    });
+
+    document.getElementById('matcher-reset') && document.getElementById('matcher-reset').addEventListener('click', function() {
+      Object.keys(answers).forEach(function(k) { delete answers[k]; });
+      showStep(1);
+      track('matcher_reset', {});
+    });
+  })();
 </script>
 
 </body>
