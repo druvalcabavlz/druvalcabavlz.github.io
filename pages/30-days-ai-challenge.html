@@ -140,12 +140,12 @@
     <div class="bg-white border border-border rounded-xl p-5 max-w-sm">
       <div class="flex items-center justify-between mb-3">
         <span class="text-sm font-semibold text-navy">Progress</span>
-        <span class="text-sm font-bold text-primary" id="progress-label">Day 2 of 30</span>
+        <span class="text-sm font-bold text-primary" id="progress-label">Day 3 of 30</span>
       </div>
       <div class="progress-bar">
         <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
       </div>
-      <p class="text-xs text-muted mt-3">2 days completed · 28 to go</p>
+      <p class="text-xs text-muted mt-3">3 days completed · 27 to go</p>
     </div>
 
   </div>
@@ -273,11 +273,75 @@
     </article>
 
 
+    <!-- ── DAY 3 ── -->
+    <article class="day-entry reveal pl-6" id="day-3">
+      <div class="flex flex-wrap items-center gap-3 mb-3">
+        <span class="font-heading font-black text-navy text-sm">Day 03</span>
+        <span class="text-xs font-semibold px-2.5 py-1 rounded-full badge-technical">Technical</span>
+        <span class="text-xs text-muted">Mar 4, 2026</span>
+      </div>
+
+      <h2 class="font-heading font-bold text-navy text-xl mb-3">
+        I tried to build an API. I built Contra instead.
+      </h2>
+
+      <div class="text-muted leading-relaxed space-y-4">
+        <p>
+          The plan for Day 3 was clean: build a small public REST API — something Claude-powered, useful, maybe something other people could call. It sounded like a perfect one-day scope. It was not.
+        </p>
+        <p>
+          The moment I started sketching it out, the list of prerequisites exploded. OAuth or API keys — which one and how? Cloud hosting — serverless function, VPS, Railway? Rate limiting so nobody runs up my bill? And then the one that really stopped me: <strong class="text-navy">security</strong>. A misconfigured public endpoint can expose way more than you intended. Injection attacks, SSRF, leaking secrets through error messages — getting it right takes real care, and getting it wrong in public is embarrassing at best and dangerous at worst.
+        </p>
+        <p>
+          I decided not to rush it. A public API done properly is a one-week project, not a one-day one. So I pivoted to something equally technical, completely self-contained, and way more fun.
+        </p>
+        <p>
+          <strong class="text-navy">I rebuilt Contra Stage 1 as a fully playable browser game — in a single HTML file.</strong> No server, no auth, no attack surface. Just a canvas, a game loop, and Claude Code helping me design every system from scratch.
+        </p>
+
+        <p class="font-semibold text-navy">What ended up inside that one file:</p>
+        <ul class="space-y-2 text-sm pl-1">
+          <li class="flex items-start gap-2"><span class="text-primary mt-0.5 flex-shrink-0">→</span><span>HTML5 Canvas 2D renderer with a 3-layer parallax jungle background and scrolling camera</span></li>
+          <li class="flex items-start gap-2"><span class="text-primary mt-0.5 flex-shrink-0">→</span><span>Full game loop — physics, AABB collision detection, variable-height jumping, enemy wave spawning</span></li>
+          <li class="flex items-start gap-2"><span class="text-primary mt-0.5 flex-shrink-0">→</span><span>5 enemy types with distinct AI: walker, shooter, armored, jumper, and stationary turret</span></li>
+          <li class="flex items-start gap-2"><span class="text-primary mt-0.5 flex-shrink-0">→</span><span>3 power-ups (Spread shot, Rapid fire, Barrier shield), destructible crates, indestructible barriers, one-way platforms</span></li>
+          <li class="flex items-start gap-2"><span class="text-primary mt-0.5 flex-shrink-0">→</span><span>Web Audio API sound engine — every sound effect synthesized in code, no audio files</span></li>
+          <li class="flex items-start gap-2"><span class="text-primary mt-0.5 flex-shrink-0">→</span><span>3 boss fights, each harder than the last — ending with a skull fortress called Crimson Omega and a dramatic zoom-out into a wider arena</span></li>
+        </ul>
+
+        <div class="bg-bg border border-border rounded-xl p-5 mt-4">
+          <p class="text-sm font-semibold text-navy mb-2">What I learned</p>
+          <ul class="space-y-2 text-sm">
+            <li class="flex items-start gap-2">
+              <span class="text-primary mt-0.5">→</span>
+              Knowing when <em>not</em> to ship is a skill. Rushing a public API with weak security is worse than not building it at all.
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-primary mt-0.5">→</span>
+              Self-contained builds have real value — no dependencies, no attack surface, no cloud bill. Sometimes a single HTML file is the right architecture.
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-primary mt-0.5">→</span>
+              Claude Code is genuinely good at game logic. Describing collision resolution, boss phase transitions, and audio synthesis in plain language and getting working code back is still kind of wild.
+            </li>
+          </ul>
+        </div>
+
+        <p class="text-sm text-muted">
+          <strong class="text-navy">Tools used:</strong> Claude Code, HTML5 Canvas, Web Audio API
+          &nbsp;·&nbsp;
+          <a href="contra-post.html" class="text-primary hover:underline">Read the full post →</a>
+          &nbsp;·&nbsp;
+          <a href="contra-game.html" class="text-primary hover:underline">Play the game →</a>
+        </p>
+      </div>
+    </article>
+
     <!-- ── UPCOMING PLACEHOLDER ── -->
     <div class="day-upcoming reveal pl-6 border-l-2 border-dashed border-border">
       <div class="flex items-center gap-3 mb-2">
-        <span class="font-heading font-black text-muted text-sm">Day 03</span>
-        <span class="text-xs text-muted">Coming Mar 4, 2026</span>
+        <span class="font-heading font-black text-muted text-sm">Day 04</span>
+        <span class="text-xs text-muted">Coming Mar 5, 2026</span>
       </div>
       <p class="text-muted text-sm italic">Next entry will be posted tomorrow...</p>
     </div>
@@ -339,7 +403,7 @@
   // Animate progress bar on load
   window.addEventListener('load', () => {
     setTimeout(() => {
-      document.getElementById('progress-fill').style.width = '6.66%'; // 2/30
+      document.getElementById('progress-fill').style.width = '10%'; // 3/30
     }, 400);
   });
 </script>

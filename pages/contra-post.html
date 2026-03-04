@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I Tried to Build an API. I Built Contra Instead. | Dulce Lucero</title>
+  <meta name="description" content="Day 3 of my 30 Days AI Challenge: I set out to build a public API, hit a wall of OAuth, cloud services, and security landmines — and shipped a fully playable Contra remake instead." />
+
+  <!-- Security -->
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4PQR9N1WTT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4PQR9N1WTT');
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy:    '#111111',
+            primary: '#2563EB',
+            sky:     '#3B82F6',
+            bg:      '#F9FAFB',
+            surface: '#FFFFFF',
+            border:  '#E5E7EB',
+            muted:   '#6B7280',
+          },
+          fontFamily: {
+            heading: ['Archivo', 'sans-serif'],
+            body:    ['DM Sans', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html  { scroll-behavior: smooth; }
+    body  { font-family: 'DM Sans', sans-serif; background: #FFFFFF; color: #111111; line-height: 1.6; }
+    h1,h2,h3,h4 { font-family: 'Archivo', sans-serif; }
+
+    .section-label {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: #2563EB;
+    }
+
+    .nav-scrolled { background: rgba(255,255,255,0.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid #E5E7EB; }
+    .nav-link { transition: color 0.2s ease; }
+    .nav-link:hover { color: #2563EB; }
+
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid #2563EB;
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    /* Post body typography */
+    .prose p  { margin-bottom: 1.4rem; color: #374151; line-height: 1.8; }
+    .prose h2 { font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 1.35rem; color: #111111; margin: 2.4rem 0 0.9rem; }
+    .prose h3 { font-family: 'Archivo', sans-serif; font-weight: 600; font-size: 1.1rem; color: #111111; margin: 1.8rem 0 0.6rem; }
+    .prose ul { margin-bottom: 1.4rem; padding-left: 1.4rem; }
+    .prose ul li { color: #374151; margin-bottom: 0.5rem; line-height: 1.7; list-style: disc; }
+    .prose strong { color: #111111; font-weight: 600; }
+    .prose code  { background: #F3F4F6; border: 1px solid #E5E7EB; border-radius: 4px; padding: 0.1em 0.4em; font-size: 0.875em; color: #2563EB; }
+    .prose blockquote { border-left: 3px solid #2563EB; padding-left: 1.2rem; margin: 1.8rem 0; }
+    .prose blockquote p { color: #6B7280; font-style: italic; margin-bottom: 0; }
+
+    /* Callout box */
+    .callout { background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 12px; padding: 1.25rem 1.5rem; margin: 2rem 0; }
+    .callout-warn { background: #FFFBEB; border-color: #FDE68A; }
+    .callout-danger { background: #FEF2F2; border-color: #FECACA; }
+
+    /* Giveaway banner */
+    .giveaway-banner {
+      background: linear-gradient(135deg, #111111 0%, #1e1e2e 100%);
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .giveaway-banner::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        -45deg,
+        rgba(37,99,235,0.04) 0px,
+        rgba(37,99,235,0.04) 1px,
+        transparent 1px,
+        transparent 12px
+      );
+    }
+    .pixel-text {
+      font-family: monospace;
+      letter-spacing: 0.06em;
+    }
+
+    .play-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #2563EB; color: #fff;
+      font-family: 'Archivo', sans-serif; font-weight: 700;
+      padding: 14px 32px; border-radius: 8px;
+      text-decoration: none; font-size: 1rem;
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+    .play-btn:hover { background: #1d4ed8; transform: translateY(-1px); }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<header id="site-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <nav class="max-w-5xl mx-auto px-6 md:px-12 lg:px-24 py-5 flex items-center justify-between">
+    <a href="../index.html" aria-label="Back to home" class="font-heading font-bold text-navy text-sm tracking-tight">
+      Dulce Lucero
+    </a>
+    <ul class="flex items-center gap-7 list-none">
+      <li><a href="../index.html#about"      class="nav-link text-muted text-sm">About</a></li>
+      <li><a href="../index.html#skills"     class="nav-link text-muted text-sm">Skills</a></li>
+      <li><a href="../index.html#experience" class="nav-link text-muted text-sm">Experience</a></li>
+      <li><a href="blog.html"                class="nav-link text-muted text-sm">Writing</a></li>
+      <li><a href="../index.html#contact"    class="nav-link text-primary text-sm font-semibold">Hire Me</a></li>
+    </ul>
+  </nav>
+</header>
+
+
+<!-- ── HERO ── -->
+<section class="pt-36 pb-12 px-6 md:px-12 lg:px-24 border-b border-border">
+  <div class="max-w-2xl mx-auto">
+    <div class="flex flex-wrap items-center gap-3 mb-6">
+      <a href="blog.html" class="section-label hover:underline">← Writing</a>
+      <span class="text-border text-xs">|</span>
+      <span class="text-xs text-muted">Build Log</span>
+      <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-primary/10 text-primary">30 Days AI · Day 3</span>
+    </div>
+    <h1 class="font-heading font-black text-navy leading-tight mb-5" style="font-size: clamp(1.9rem, 5vw, 3rem);">
+      I Tried to Build an API.<br/>I Built Contra Instead.
+    </h1>
+    <p class="text-muted text-lg leading-relaxed mb-6">
+      Day 3 of my AI challenge: the plan was a clean public REST API. What I found was a rabbit hole of OAuth flows, cloud services, and security landmines. So I shipped something completely different — and way more fun.
+    </p>
+    <div class="flex flex-wrap items-center gap-4 text-xs text-muted">
+      <span>Dulce Lucero</span>
+      <span>·</span>
+      <span>Mar 2026</span>
+      <span>·</span>
+      <span>5 min read</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── POST BODY ── -->
+<main class="py-16 px-6 md:px-12 lg:px-24">
+  <div class="max-w-2xl mx-auto prose">
+
+    <h2>The original plan</h2>
+    <p>
+      For Day 3 of my <a href="30-days-ai-challenge.html" class="text-primary hover:underline">30 Days AI Challenge</a>, I wanted to build something practical: a small public REST API. Nothing fancy — maybe something that wraps a useful dataset or exposes a few Claude-powered endpoints that other people could actually call.
+    </p>
+    <p>
+      It sounded perfectly sized for a one-day build. I was wrong.
+    </p>
+
+    <h2>What I ran into</h2>
+    <p>
+      I started scoping it out and the list of "things I'd need to sort out first" grew faster than the actual feature list:
+    </p>
+    <ul>
+      <li><strong>Authentication & OAuth.</strong> Even a basic API needs some kind of auth. Do I roll my own API keys? Use OAuth 2.0? That alone is a half-day of setup and decision-making.</li>
+      <li><strong>Cloud hosting.</strong> A public endpoint needs to live somewhere — a serverless function, a small VPS, something on AWS/GCP/Railway. None of that is plug-and-play if you're also thinking about uptime and cost.</li>
+      <li><strong>Rate limiting.</strong> Without it, anyone can hammer the endpoint and run up my bill (or Claude's). Adding it properly means a Redis layer or at least some kind of token bucket logic.</li>
+      <li><strong>Security.</strong> This is where I really pumped the brakes. A misconfigured API endpoint can expose way more than you intended — injection attacks, SSRF, leaking secrets through error messages. Getting this right takes real care, and getting it <em>wrong</em> in public is embarrassing at best, dangerous at worst.</li>
+      <li><strong>CORS, HTTPS, headers.</strong> Obvious in retrospect, but each one is another config file and another thing that can break silently.</li>
+    </ul>
+
+    <div class="callout callout-warn">
+      <p class="text-sm" style="margin-bottom:0; color:#92400e;">
+        <strong>The honest realization:</strong> building a public API correctly — not just <em>working</em>, but secure and production-grade — is not a one-day project. It's a one-week project minimum, and rushing it is how you end up with a security incident.
+      </p>
+    </div>
+
+    <h2>The pivot</h2>
+    <p>
+      Rather than ship something half-baked and potentially risky, I decided to do something equally technical but fully self-contained: <strong>rebuild Contra Stage 1 as a playable browser game, entirely in a single HTML file.</strong>
+    </p>
+    <p>
+      No server. No auth. No cloud bill. No attack surface. Just a canvas, a game loop, and Claude Code helping me think through every system from scratch.
+    </p>
+    <p>
+      It turned out to be one of the most fun builds I've done. Here's what ended up inside that one file:
+    </p>
+    <ul>
+      <li>HTML5 Canvas 2D renderer with a parallax forest background</li>
+      <li>Full game loop — physics, collision detection, camera system</li>
+      <li>5 enemy types with distinct AI behaviors (walker, shooter, armored, jumper, turret)</li>
+      <li>10 enemy wave spawns across a 4800px scrolling stage</li>
+      <li>3 power-ups: Spread shot, Rapid fire, Barrier shield</li>
+      <li>Destructible crates, indestructible barriers, one-way platforms</li>
+      <li>A Web Audio API sound engine — no audio files, all synthesized in code</li>
+      <li>3 boss fights, each harder than the last — ending with a dramatic zoom-out into a wider arena</li>
+    </ul>
+
+    <div class="callout">
+      <p class="text-sm" style="margin-bottom:0; color:#1e40af;">
+        <strong>PM lesson I keep relearning:</strong> a scoped, shipped thing is always better than an ambitious, unfinished one. The API will happen — but not in a day, and not without doing it properly.
+      </p>
+    </div>
+
+    <h2>Go play it</h2>
+    <p>
+      The game is fully playable right here. Arrow keys to move, Z or Space to jump, X to shoot. Aim up with the Up arrow. If you make it to the 3rd boss — a flying skull fortress called <strong>Crimson Omega</strong> — you'll know.
+    </p>
+
+    <div class="my-8 flex justify-center">
+      <a href="contra-game.html" class="play-btn">
+        ▶ &nbsp; Play Contra Stage 1
+      </a>
+    </div>
+
+  </div>
+
+  <!-- ── GIVEAWAY BANNER ── -->
+  <div class="max-w-2xl mx-auto mt-12">
+    <div class="giveaway-banner p-8 md:p-10 relative">
+      <div class="relative z-10">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="text-2xl">🏆</span>
+          <span class="pixel-text text-xs font-bold text-primary uppercase tracking-widest">Challenge</span>
+        </div>
+        <h2 class="font-heading font-black text-white text-2xl md:text-3xl leading-tight mb-4">
+          Beat the game. Win a month of Claude Code.
+        </h2>
+        <p class="text-gray-400 leading-relaxed mb-6 max-w-lg">
+          If you make it all the way to the end — defeat all three bosses including Crimson Omega in Stage 3 — I'll give away <strong class="text-white">one free month of Claude Code Pro</strong> to the first person who reaches out and tells me they did it.
+        </p>
+        <p class="text-gray-400 text-sm leading-relaxed mb-8">
+          Screenshot your win screen, then send me a message on LinkedIn or drop me an email. First one in gets it. No tricks — the game is genuinely hard, especially Stage 3.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="https://linkedin.com/in/dulceruvalcaba" target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center gap-2 bg-primary text-white text-sm font-semibold px-5 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200">
+            Message me on LinkedIn →
+          </a>
+          <a href="mailto:druvalcabavlz@gmail.com?subject=I%20beat%20Contra!&body=I%20defeated%20Crimson%20Omega!%20Here%27s%20my%20screenshot:"
+             class="inline-flex items-center gap-2 border border-white/20 text-white text-sm font-semibold px-5 py-3 rounded-lg hover:bg-white/10 transition-colors duration-200">
+            Email me →
+          </a>
+        </div>
+        <p class="text-gray-600 text-xs mt-5 pixel-text">
+          [ LIVES: 3 · STAGE: 1 · BOSSES REMAINING: 3 · GOOD LUCK ]
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── BACK NAV ── -->
+  <div class="max-w-2xl mx-auto mt-12 pt-8 border-t border-border flex items-center justify-between">
+    <a href="blog.html" class="text-sm text-muted hover:text-primary transition-colors duration-200">← All posts</a>
+    <a href="30-days-ai-challenge.html" class="text-sm text-muted hover:text-primary transition-colors duration-200">30 Days Challenge →</a>
+  </div>
+
+</main>
+
+
+<!-- ── FOOTER ── -->
+<footer class="bg-navy border-t border-white/10 py-6 px-6 text-center">
+  <p class="text-muted text-sm">
+    &copy; <span id="year"></span> Dulce Lucero Ruvalcaba Valenzuela &middot;
+    <a href="../index.html" class="hover:text-white transition-colors duration-200">← Back to portfolio</a>
+  </p>
+</footer>
+
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('nav-scrolled', window.scrollY > 60);
+  }, { passive: true });
+</script>
+
+</body>
+</html>
