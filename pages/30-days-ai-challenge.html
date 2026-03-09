@@ -140,12 +140,12 @@
     <div class="bg-white border border-border rounded-xl p-5 max-w-sm">
       <div class="flex items-center justify-between mb-3">
         <span class="text-sm font-semibold text-navy">Progress</span>
-        <span class="text-sm font-bold text-primary" id="progress-label">Day 3 of 30</span>
+        <span class="text-sm font-bold text-primary" id="progress-label">Day 4 of 30</span>
       </div>
       <div class="progress-bar">
         <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
       </div>
-      <p class="text-xs text-muted mt-3">3 days completed · 27 to go</p>
+      <p class="text-xs text-muted mt-3">4 days completed · 26 to go</p>
     </div>
 
   </div>
@@ -337,13 +337,87 @@
       </div>
     </article>
 
+    <!-- ── DAY 4 ── -->
+    <article class="day-entry reveal pl-6" id="day-4">
+      <div class="flex flex-wrap items-center gap-3 mb-3">
+        <span class="font-heading font-black text-navy text-sm">Day 04</span>
+        <span class="text-xs font-semibold px-2.5 py-1 rounded-full badge-technical">Technical</span>
+        <span class="text-xs text-muted">Mar 9, 2026</span>
+      </div>
+
+      <h2 class="font-heading font-bold text-navy text-xl mb-3">
+        I scored my product roadmap with AI — and built the dashboard to prove it
+      </h2>
+
+      <div class="text-muted leading-relaxed space-y-4">
+        <p>
+          A quick note before we get into it: Days 5 through 8 were supposed to happen. They didn't.
+          I came down with influenza — the real kind, not the "I feel a bit off" kind — and spent most
+          of the week horizontal. The challenge paused. I'm back now, and I'm continuing from where I left off.
+        </p>
+        <p>
+          Day 4's project had been sitting in my notes since before I got sick: a <strong class="text-navy">Roadmap Reality Check</strong>
+          tool that takes your product roadmap items — pasted as text or uploaded as a CSV — runs them
+          through Claude, and returns a health score with flags, reasoning, and recommendations for each item.
+          Every analysis is persisted to a database and charted over time so you can see whether your roadmap
+          is getting healthier or drifting further from reality.
+        </p>
+        <p>
+          This was a real step up in complexity. Previous days had me building single-file tools or games.
+          Day 4 is a proper multi-layer app: Express backend, database, file upload, AI analysis, and a
+          charted history view — all running locally with no build step.
+        </p>
+
+        <p class="font-semibold text-navy">How it works:</p>
+        <ul class="space-y-2 text-sm pl-1">
+          <li class="flex items-start gap-2"><span class="text-primary mt-0.5 flex-shrink-0">→</span><span><strong class="text-navy">Input</strong> — paste roadmap items as free text (one per line) or upload a CSV with any column naming convention. The parser normalizes both into a numbered list with all available fields.</span></li>
+          <li class="flex items-start gap-2"><span class="text-primary mt-0.5 flex-shrink-0">→</span><span><strong class="text-navy">Analysis</strong> — Claude receives the list and returns a JSON object: an overall score (0–100), a 2–3 sentence executive summary, top issues, and a per-item breakdown with score, flags, reasoning, and a concrete recommendation.</span></li>
+          <li class="flex items-start gap-2"><span class="text-primary mt-0.5 flex-shrink-0">→</span><span><strong class="text-navy">Flags</strong> — five categories Claude can assign: <em>Vague</em>, <em>Stale</em>, <em>Unanchored</em>, <em>Dependency Risk</em>, and <em>Stakeholder-Driven</em>. Each gets its own color badge so problem patterns jump out visually.</span></li>
+          <li class="flex items-start gap-2"><span class="text-primary mt-0.5 flex-shrink-0">→</span><span><strong class="text-navy">Persistence</strong> — every analysis is saved to a local SQLite database (using Node 24's built-in <code style="font-family:monospace;font-size:0.875em;background:#F3F4F6;padding:0.1em 0.4em;border-radius:4px;color:#1D4ED8;">node:sqlite</code> module — no native compilation required).</span></li>
+          <li class="flex items-start gap-2"><span class="text-primary mt-0.5 flex-shrink-0">→</span><span><strong class="text-navy">History dashboard</strong> — a bar chart (Chart.js) plots every overall score over time, color-coded green/amber/red. Below the chart is a clickable list: click any entry to reload that analysis in the results view.</span></li>
+        </ul>
+
+        <p>
+          The most interesting technical decision was the database choice. The plan called for
+          <code style="font-family:monospace;font-size:0.875em;background:#F3F4F6;padding:0.1em 0.4em;border-radius:4px;color:#1D4ED8;">better-sqlite3</code>,
+          but it fails to compile on Node 24 — no pre-built binaries for arm64 and the native build requires
+          a C++20 compiler that the current Xcode tools don't supply. Switched to
+          <code style="font-family:monospace;font-size:0.875em;background:#F3F4F6;padding:0.1em 0.4em;border-radius:4px;color:#1D4ED8;">node:sqlite</code>
+          instead — it's built into Node 24, zero install, and the API is nearly identical. One of those
+          "the platform grew up" moments.
+        </p>
+
+        <div class="bg-bg border border-border rounded-xl p-5 mt-4">
+          <p class="text-sm font-semibold text-navy mb-2">What I learned</p>
+          <ul class="space-y-2 text-sm">
+            <li class="flex items-start gap-2">
+              <span class="text-primary mt-0.5">→</span>
+              Claude as a <em>structured scorer</em> is powerful. Give it a rubric and a list, and it returns consistent, actionable evaluations — much more useful than a free-form critique.
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-primary mt-0.5">→</span>
+              The history dashboard changes the value proposition. A single score is a snapshot. A trend line is a feedback loop. The tool becomes 10× more useful the second time you run it.
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-primary mt-0.5">→</span>
+              Don't fight the platform. Node 24 ships with SQLite — use it. The right dependency is sometimes no dependency.
+            </li>
+          </ul>
+        </div>
+
+        <p class="text-sm text-muted">
+          <strong class="text-navy">Tools used:</strong> Claude Code, Node.js 24, TypeScript, tsx, Express, node:sqlite, csv-parse, multer, Chart.js, claude-sonnet-4-6
+        </p>
+      </div>
+    </article>
+
     <!-- ── UPCOMING PLACEHOLDER ── -->
     <div class="day-upcoming reveal pl-6 border-l-2 border-dashed border-border">
       <div class="flex items-center gap-3 mb-2">
-        <span class="font-heading font-black text-muted text-sm">Day 04</span>
-        <span class="text-xs text-muted">Coming Mar 5, 2026</span>
+        <span class="font-heading font-black text-muted text-sm">Day 05</span>
+        <span class="text-xs text-muted">Coming soon</span>
       </div>
-      <p class="text-muted text-sm italic">Next entry will be posted tomorrow...</p>
+      <p class="text-muted text-sm italic">Next entry coming up...</p>
     </div>
 
   </div>
@@ -403,7 +477,7 @@
   // Animate progress bar on load
   window.addEventListener('load', () => {
     setTimeout(() => {
-      document.getElementById('progress-fill').style.width = '10%'; // 3/30
+      document.getElementById('progress-fill').style.width = '13.33%'; // 4/30
     }, 400);
   });
 </script>
