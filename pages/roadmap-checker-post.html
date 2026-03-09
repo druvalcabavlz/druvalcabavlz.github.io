@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I Scored My Product Roadmap with AI — and Built the Dashboard to Prove It | Dulce Lucero</title>
+  <meta name="description" content="A web app that runs your roadmap through Claude AI, flags every item with Vague / Stale / Unanchored / Dependency Risk badges, and charts your health score over time." />
+
+  <!-- Security -->
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4PQR9N1WTT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4PQR9N1WTT');
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy:    '#111111',
+            primary: '#2563EB',
+            sky:     '#3B82F6',
+            bg:      '#F9FAFB',
+            surface: '#FFFFFF',
+            border:  '#E5E7EB',
+            muted:   '#6B7280',
+          },
+          fontFamily: {
+            heading: ['Archivo', 'sans-serif'],
+            body:    ['DM Sans', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html  { scroll-behavior: smooth; }
+    body  { font-family: 'DM Sans', sans-serif; background: #FFFFFF; color: #111111; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    h1,h2,h3,h4 { font-family: 'Archivo', sans-serif; }
+
+    .section-label {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: #2563EB;
+    }
+    .nav-scrolled { background: rgba(255,255,255,0.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid #E5E7EB; }
+    .nav-link { transition: color 0.2s ease; }
+    .nav-link:hover { color: #2563EB; }
+    a:focus-visible, button:focus-visible { outline: 2px solid #2563EB; outline-offset: 3px; border-radius: 4px; }
+
+    /* Post body */
+    .post-body { font-size: 1.05rem; color: #374151; }
+    .post-body h2 {
+      font-family: 'Archivo', sans-serif;
+      font-size: 1.35rem; font-weight: 700;
+      color: #111111;
+      margin-top: 2.5rem; margin-bottom: 0.85rem;
+    }
+    .post-body h3 {
+      font-family: 'Archivo', sans-serif;
+      font-size: 1.1rem; font-weight: 600;
+      color: #111111;
+      margin-top: 1.75rem; margin-bottom: 0.6rem;
+    }
+    .post-body p  { margin-bottom: 1.1rem; line-height: 1.75; }
+    .post-body ul { margin-left: 1.35rem; margin-bottom: 1.1rem; }
+    .post-body li { margin-bottom: 0.5rem; line-height: 1.7; }
+    .post-body strong { color: #111111; font-weight: 600; }
+    .post-body em    { font-style: italic; }
+    .post-body a     { color: #2563EB; text-decoration: underline; }
+    .post-body a:hover { color: #1D4ED8; }
+
+    /* Inline code */
+    .post-body code {
+      font-family: 'Courier New', monospace;
+      font-size: 0.875em;
+      background: #F3F4F6;
+      border: 1px solid #E5E7EB;
+      padding: 0.15em 0.45em;
+      border-radius: 4px;
+      color: #1D4ED8;
+    }
+
+    /* Stack pill list */
+    .stack-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0 1.5rem; }
+    .stack-pill {
+      font-size: 0.8rem; font-weight: 500;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      color: #1D4ED8;
+    }
+
+    /* Callout box */
+    .callout {
+      background: #F0FDF4;
+      border: 1px solid #BBF7D0;
+      border-left: 3px solid #16A34A;
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin: 1.5rem 0;
+    }
+    .callout p { margin-bottom: 0; color: #15803D; font-size: 0.95rem; }
+    .callout strong { color: #14532D; }
+
+    /* Flag badge row */
+    .flag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0 1.5rem; }
+    .flag-badge {
+      font-size: 0.78rem; font-weight: 600;
+      padding: 0.2rem 0.75rem;
+      border-radius: 999px;
+    }
+    .flag-vague        { background: rgba(245,158,11,0.12);  color: #D97706; }
+    .flag-stale        { background: rgba(107,114,128,0.12); color: #4B5563; }
+    .flag-unanchored   { background: rgba(249,115,22,0.12);  color: #EA580C; }
+    .flag-dep-risk     { background: rgba(239,68,68,0.12);   color: #DC2626; }
+    .flag-stakeholder  { background: rgba(139,92,246,0.12);  color: #7C3AED; }
+
+    /* Score circle */
+    .score-demo {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      border: 5px solid #10B981;
+      margin: 0 auto;
+    }
+    .score-demo.amber { border-color: #F59E0B; }
+    .score-demo.red   { border-color: #EF4444; }
+    .score-demo-num   { font-family: 'Archivo', sans-serif; font-size: 2rem; font-weight: 900; color: #10B981; line-height: 1; }
+    .score-demo.amber .score-demo-num { color: #F59E0B; }
+    .score-demo.red   .score-demo-num { color: #EF4444; }
+    .score-demo-lbl   { font-size: 0.65rem; color: #6B7280; text-transform: uppercase; letter-spacing: 0.07em; margin-top: 2px; }
+
+    /* Score trio */
+    .score-trio { display: flex; align-items: center; justify-content: center; gap: 2rem; margin: 1.5rem 0; }
+
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<header id="site-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <nav class="max-w-5xl mx-auto px-6 md:px-12 lg:px-24 py-5 flex items-center justify-between">
+    <a href="../index.html" aria-label="Back to home" class="font-heading font-bold text-navy text-sm tracking-tight">
+      Dulce Lucero
+    </a>
+    <ul class="flex items-center gap-7 list-none">
+      <li><a href="../index.html#about"      class="nav-link text-muted text-sm">About</a></li>
+      <li><a href="../index.html#skills"     class="nav-link text-muted text-sm">Skills</a></li>
+      <li><a href="../index.html#experience" class="nav-link text-muted text-sm">Experience</a></li>
+      <li><a href="blog.html"               class="nav-link text-primary text-sm font-semibold">Writing</a></li>
+      <li><a href="../index.html#contact"    class="nav-link text-primary text-sm font-semibold">Hire Me</a></li>
+    </ul>
+  </nav>
+</header>
+
+
+<!-- ── ARTICLE HERO ── -->
+<section class="pt-36 pb-12 px-6 md:px-12 lg:px-24 border-b border-border">
+  <div class="max-w-3xl mx-auto">
+    <a href="blog.html" class="inline-flex items-center gap-1.5 text-sm text-muted hover:text-primary transition-colors duration-200 mb-6">
+      ← Back to Writing
+    </a>
+    <div class="flex flex-wrap items-center gap-3 mb-4">
+      <p class="section-label">Build Log</p>
+      <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-primary/10 text-primary">Day 4 · 30 Days AI Challenge</span>
+    </div>
+    <h1 class="font-heading font-black text-navy leading-tight mb-5" style="font-size: clamp(1.8rem, 5vw, 2.8rem);">
+      I Scored My Product Roadmap with AI — and Built the Dashboard to Prove It
+    </h1>
+    <p class="text-muted text-lg leading-relaxed mb-6 max-w-2xl">
+      A web app that runs your roadmap through Claude, flags every item with health warnings, persists every analysis to a database, and charts your score trend over time.
+    </p>
+    <div class="flex flex-wrap items-center gap-4 text-sm text-muted">
+      <span>Mar 9, 2026</span>
+      <span>·</span>
+      <span>7 min read</span>
+      <span>·</span>
+      <a href="30-days-ai-challenge.html#day-4" class="text-primary font-medium hover:underline">View challenge entry →</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── ARTICLE BODY ── -->
+<main class="py-14 px-6 md:px-12 lg:px-24">
+  <article class="max-w-3xl mx-auto post-body">
+
+    <p>
+      A quick note: this was supposed to be Day 4 on March 5th. I came down with influenza — the kind that keeps you horizontal for four days — and the challenge paused. I'm back now, picking up where I left off. Day 4, dated March 9th.
+    </p>
+
+    <p>
+      I'd had the idea for this one before I got sick. Every PM I know has a roadmap health problem — not that they don't have a roadmap, but that they can't tell, at a glance, how healthy it is. Are the items well-defined? Do they have owners? Are they anchored to outcomes or just someone's pet project? Is anything embarrassingly stale?
+    </p>
+
+    <p>
+      The answer is usually "we know it's a mess, we just don't have a clean way to see it." So I built one.
+    </p>
+
+    <h2>What it does</h2>
+    <p>
+      You paste in your roadmap items as free text, or upload a CSV — whatever you actually have. The tool sends them to Claude with a structured prompt, gets back a health score for each item plus an overall score from 0–100, and renders a results view with flag badges, expandable reasoning, and a concrete recommendation for each item.
+    </p>
+    <p>
+      Every analysis is saved to a local SQLite database. The History tab shows a bar chart of all your scores over time — color-coded green, amber, and red — with a clickable list below it. You can reload any past analysis instantly.
+    </p>
+
+    <p>The three score zones, shown as a score circle:</p>
+    <div class="score-trio">
+      <div style="text-align:center;">
+        <div class="score-demo"><span class="score-demo-num">78</span><span class="score-demo-lbl">Score</span></div>
+        <p style="font-size:0.78rem;color:#10B981;margin-top:0.5rem;font-weight:600;">Healthy ≥ 70</p>
+      </div>
+      <div style="text-align:center;">
+        <div class="score-demo amber"><span class="score-demo-num">54</span><span class="score-demo-lbl">Score</span></div>
+        <p style="font-size:0.78rem;color:#F59E0B;margin-top:0.5rem;font-weight:600;">At Risk 40–69</p>
+      </div>
+      <div style="text-align:center;">
+        <div class="score-demo red"><span class="score-demo-num">31</span><span class="score-demo-lbl">Score</span></div>
+        <p style="font-size:0.78rem;color:#EF4444;margin-top:0.5rem;font-weight:600;">Critical &lt; 40</p>
+      </div>
+    </div>
+
+    <h2>The five flags</h2>
+    <p>
+      Claude can assign any combination of five flags to each item. Each one has a color so patterns jump out across the table immediately:
+    </p>
+    <div class="flag-row">
+      <span class="flag-badge flag-vague">Vague</span>
+      <span class="flag-badge flag-stale">Stale</span>
+      <span class="flag-badge flag-unanchored">Unanchored</span>
+      <span class="flag-badge flag-dep-risk">Dependency Risk</span>
+      <span class="flag-badge flag-stakeholder">Stakeholder-Driven</span>
+    </div>
+    <ul>
+      <li><strong>Vague</strong> — the item is too ambiguous to estimate or build. "Improve performance" is vague. "Reduce P95 API latency below 200ms" is not.</li>
+      <li><strong>Stale</strong> — the item has been sitting untouched long enough that its assumptions are probably wrong. Claude infers this from date fields and context clues in the description.</li>
+      <li><strong>Unanchored</strong> — there's no connection to a business outcome, OKR, or user problem. It's a feature in search of a reason.</li>
+      <li><strong>Dependency Risk</strong> — the item depends on something outside the team's control: another team, a vendor, regulatory approval. If the dependency slips, this slips.</li>
+      <li><strong>Stakeholder-Driven</strong> — the item exists because someone important asked for it, not because it was prioritized on merit. Sometimes that's fine. Often it isn't.</li>
+    </ul>
+
+    <div class="callout">
+      <p><strong>Why these five?</strong> They're the most common failure modes I've seen across roadmaps — the things that, when you look back at a shipped quarter, explain why half the items got deprioritized or delivered wrong. They're also things Claude can reasonably infer from short item descriptions without needing internal context.</p>
+    </div>
+
+    <h2>The prompt design</h2>
+    <p>
+      Getting consistent, parseable JSON from Claude required some care. The system prompt is short and assertive: <em>"You are a product management expert. Analyze the roadmap items below and return ONLY valid JSON, no other text."</em>
+    </p>
+    <p>
+      The user prompt sends all items as a numbered list — including any available fields like description, owner, due date, and status — and asks for a specific JSON shape:
+    </p>
+    <ul>
+      <li><code>overallScore</code> — 0 to 100 integer</li>
+      <li><code>summary</code> — 2–3 sentence executive summary</li>
+      <li><code>topIssues</code> — array of 3 strings, the most critical problems</li>
+      <li><code>items</code> — array with <code>name</code>, <code>score</code>, <code>flags</code>, <code>reasoning</code>, and <code>recommendation</code> for each item</li>
+    </ul>
+    <p>
+      Even with explicit instructions, Claude occasionally adds a brief explanation before the JSON. The parser strips everything before the first <code>{</code> before calling <code>JSON.parse</code>. If no valid JSON is found, the server returns a 500 with the raw text for debugging.
+    </p>
+
+    <h2>The stack</h2>
+    <div class="stack-pills">
+      <span class="stack-pill">Node.js 24</span>
+      <span class="stack-pill">TypeScript + tsx</span>
+      <span class="stack-pill">Express</span>
+      <span class="stack-pill">node:sqlite</span>
+      <span class="stack-pill">csv-parse</span>
+      <span class="stack-pill">multer</span>
+      <span class="stack-pill">Chart.js</span>
+      <span class="stack-pill">claude-sonnet-4-6</span>
+    </div>
+    <p>
+      The most interesting stack decision wasn't planned — it was forced. The original design called for <code>better-sqlite3</code>, the standard choice for SQLite in Node. But <code>better-sqlite3</code> v9 has no pre-built binaries for Node 24 on Apple Silicon, and the native build fails because the Xcode Command Line Tools on this machine don't support C++20 (which Node 24's headers now require).
+    </p>
+    <p>
+      Rather than downgrade Node or fight the toolchain, I switched to <code>node:sqlite</code> — the SQLite module that ships built into Node 24 itself. Zero install. Zero compilation. The API is nearly identical to <code>better-sqlite3</code>: <code>DatabaseSync</code>, <code>prepare()</code>, <code>run()</code>, <code>all()</code>, <code>get()</code>. One of those moments where the platform has grown up and the right answer is to stop fighting it.
+    </p>
+
+    <h2>The database schema</h2>
+    <p>
+      Two tables. <code>analyses</code> stores the top-level result — input type, raw input, overall score, summary, and top issues as a JSON string. <code>items</code> stores each individual item result with a foreign key back to its analysis. Reading a full analysis is a single join.
+    </p>
+    <p>
+      Saves are wrapped in a manual <code>BEGIN / COMMIT / ROLLBACK</code> transaction since <code>node:sqlite</code> doesn't have a built-in transaction helper (unlike <code>better-sqlite3</code>, which has a nice <code>db.transaction(fn)()</code> pattern). It's four extra lines but it's explicit and readable.
+    </p>
+
+    <h2>The CSV parser</h2>
+    <p>
+      Real-world roadmap CSVs are inconsistent — some use "Name", some use "Feature", some use "Title". The parser tries a list of common column names and falls back to the first column if none match. It also normalizes optional fields like description, owner, due date, and status so they make it into the Claude prompt even if the column names are non-standard.
+    </p>
+    <p>
+      This matters because richer item descriptions give Claude more signal. An item with a name, description, owner, and due date will get a more accurate health assessment than one with just a name.
+    </p>
+
+    <h2>The history dashboard</h2>
+    <p>
+      The History tab is what turns this from a one-shot tool into a feedback loop. Every time you run an analysis, the score is persisted. The bar chart shows all scores over time, with bars colored green (≥ 70), amber (40–69), or red (&lt; 40). The list below it shows date, score, item count, and a summary snippet — click any entry to reload that full analysis in the Results view.
+    </p>
+    <p>
+      The value is the trend, not the absolute number. A roadmap that scores 55 today and 70 next month is improving. A roadmap that scores 80 every quarter but never changes has a different kind of problem.
+    </p>
+
+    <div class="callout" style="background:#EFF6FF; border-color:#BFDBFE; border-left-color:#2563EB;">
+      <p style="color:#1D4ED8;">
+        <strong style="color:#1E40AF;">See the challenge entry →</strong>
+        This post covers the technical depth. The <a href="30-days-ai-challenge.html#day-4">Day 4 challenge entry</a> has the condensed version alongside the full 30-day log.
+      </p>
+    </div>
+
+    <h2>What I'd do next</h2>
+    <p>
+      The tool runs locally — the obvious next step is a hosted version where you can invite your team and compare roadmaps across quarters. That requires auth, multi-tenancy, and a real deployment, which is a week of work, not a day.
+    </p>
+    <p>
+      The other thing I'd add is a <strong>diff view</strong>: when you run a second analysis on the same roadmap, show what changed — which items improved, which got worse, which are new. Right now the history gives you the trend at the top level; a diff would make the item-level changes visible.
+    </p>
+    <p>
+      And honestly, I'd improve the flags. Five categories is a good starting point, but real roadmap health is more nuanced. A flag for <em>No Success Metric</em> (how will you know when this is done?) and <em>Size Risk</em> (this item is too large to ship in one cycle) would both catch things the current set misses.
+    </p>
+
+    <h2>What I learned</h2>
+    <p>
+      Building this on Day 4 — after a week sick — was a good reminder that complexity compounds fast when you're not at 100%. The architecture is simple on paper: Express, SQLite, one API route, one Claude call. But each layer has edge cases, and when you're going quickly, they stack up.
+    </p>
+    <p>
+      The most useful habit I've built across the first four days is designing for <em>legibility</em>. A tool that shows you something you already knew, but clearly, is often more valuable than one that discovers something new. Most PMs know their roadmap has problems. The value here is making those problems visible, named, and sortable — so there's something to act on.
+    </p>
+
+  </article>
+</main>
+
+
+<!-- ── FOOTER ── -->
+<footer class="bg-navy border-t border-white/10 py-6 px-6 text-center">
+  <p class="text-muted text-sm">
+    &copy; <span id="year"></span> Dulce Lucero Ruvalcaba Valenzuela &middot;
+    <a href="blog.html" class="hover:text-white transition-colors duration-200">← Back to Writing</a>
+  </p>
+</footer>
+
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('nav-scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
